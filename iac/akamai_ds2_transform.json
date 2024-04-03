@@ -1,0 +1,251 @@
+{
+  "name": "akamai_ds2_transform",
+  "description": "Akamai DataStream 2 Transform",
+  "settings": {
+    "is_default": true,
+    "null_values": [
+      "-",
+      "^",
+      "-1"
+    ],
+    "output_columns": [
+      {
+        "name": "version",
+        "datatype": {
+          "type": "uint8"
+        }
+      },
+      {
+        "name": "customField",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "reqId",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "reqTimeSec",
+        "datatype": {
+          "type": "epoch",
+          "index": false,
+          "primary": true,
+          "source": null,
+          "format": "s",
+          "resolution": "s",
+          "default": null,
+          "script": null
+        }
+      },
+      {
+        "name": "city",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "state",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "country",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "cacheStatus",
+        "datatype": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "breadcrumbs",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "securityRules",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "edgeIP",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "transferTimeMSec",
+        "datatype": {
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "turnAroundTimeMSec",
+        "datatype": {
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "errorCode",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "reqEndTimeMSec",
+        "datatype": {
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "xForwardedFor",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "referer",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "range",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "cookie",
+        "datatype": {
+          "type": "string",
+          "index": true,
+          "index_options": {
+            "fulltext": true
+          }
+        }
+      },
+      {
+        "name": "accLang",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "reqPort",
+        "datatype": {
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "reqPath",
+        "datatype": {
+          "type": "string",
+          "index": true,
+          "index_options": {
+            "fulltext": true
+          }
+        }
+      },
+      {
+        "name": "reqMethod",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "reqHost",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "proto",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "statusCode",
+        "datatype": {
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "cliIP",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "cp",
+        "datatype": {
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "bytes",
+        "datatype": {
+          "type": "uint64"
+        }
+      },
+      {
+        "name": "rspContentLen",
+        "datatype": {
+          "type": "uint64"
+        }
+      },
+      {
+        "name": "rspContentType",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "objSize",
+        "datatype": {
+          "type": "uint64"
+        }
+      },
+      {
+        "name": "UA",
+        "datatype": {
+          "type": "string",
+          "index": true,
+          "index_options": {
+            "fulltext": true
+          }
+        }
+      },
+      {
+        "name": "tlsVersion",
+        "datatype": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "totalBytes",
+        "datatype": {
+          "type": "uint64"
+        }
+      },
+      {
+        "name": "queryStr",
+        "datatype": {
+          "type": "string"
+        }
+      }
+    ],
+    "compression": "none"
+  },
+  "type": "json"
+}
