@@ -38,6 +38,7 @@ variable "settings" {
       scriptsDirectory        = "bin"
       configurationsDirectory = "etc"
       logsDirectory           = "logs"
+      storageHostname         = "<storageHostname>"
       tests                   = [
         {
           id      = 1
