@@ -1,4 +1,4 @@
-# Definition of the probes storage instances.
+# Definition of the probes storage instance.
 resource "linode_instance" "probeStorage" {
   label           = "${var.settings.probes.prefix}-${var.settings.probes.storage.prefix}"
   tags            = var.settings.probes.storage.tags

@@ -39,13 +39,22 @@ variable "settings" {
       configurationsDirectory = "etc"
       logsDirectory           = "logs"
       storage                 = {
-        prefix                  = "storage"
-        tags                    = [ "probes", "observability" ]
-        region                  = "<region>"
-        nodeType                = "g6-standard-2"
-        nodeImage               = "linode/debian11"
-        sshPrivateKeyFilename   = "~/.ssh/id_rsa"
-        sshPublicKeyFilename    = "~/.ssh/id_rsa.pub"
+        prefix                = "storage"
+        tags                  = [ "probes", "storage", "observability" ]
+        region                = "<region>"
+        nodeType              = "g6-standard-2"
+        nodeImage             = "linode/debian11"
+        sshPrivateKeyFilename = "~/.ssh/id_rsa"
+        sshPublicKeyFilename  = "~/.ssh/id_rsa.pub"
+      }
+      securityTests           = {
+        prefix                = "security"
+        tags                  = [ "probes", "security", "observability" ]
+        region                = "<region>"
+        nodeType              = "g6-standard-2"
+        nodeImage             = "linode/kali-linux"
+        sshPrivateKeyFilename = "~/.ssh/id_rsa"
+        sshPublicKeyFilename  = "~/.ssh/id_rsa.pub"
       }
       tests                   = [
         {
