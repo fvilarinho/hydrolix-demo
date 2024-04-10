@@ -35,6 +35,7 @@ variable "settings" {
       nodeImage               = "linode/debian11"
       sshPrivateKeyFilename   = "~/.ssh/id_rsa"
       sshPublicKeyFilename    = "~/.ssh/id_rsa.pub"
+      defaultPassword         = "<password>"
     }
     probes = {
       prefix                  = "probe"
@@ -43,6 +44,7 @@ variable "settings" {
       nodeImage               = "linode/debian11"
       sshPrivateKeyFilename   = "~/.ssh/id_rsa"
       sshPublicKeyFilename    = "~/.ssh/id_rsa.pub"
+      defaultPassword         = "<password>"
       workDirectory           = "/opt/probe"
       scriptsDirectory        = "bin"
       configurationsDirectory = "etc"

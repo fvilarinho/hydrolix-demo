@@ -5,6 +5,7 @@ resource "linode_instance" "grafana" {
   type            = var.settings.grafana.nodeType
   image           = var.settings.grafana.nodeImage
   region          = var.settings.grafana.region
+  root_pass       = var.settings.grafana.defaultPassword
   authorized_keys = [chomp(file(pathexpand(var.settings.grafana.sshPublicKeyFilename)))]
 
   # Initialization script.
@@ -13,6 +14,7 @@ resource "linode_instance" "grafana" {
     connection {
       host        = self.ip_address
       user        = "root"
+      password    = var.settings.grafana.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
     }
 
@@ -36,6 +38,7 @@ resource "null_resource" "grafanaFiles" {
     connection {
       host        = linode_instance.grafana.ip_address
       user        = "root"
+      password    = var.settings.grafana.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
     }
 
@@ -48,6 +51,7 @@ resource "null_resource" "grafanaFiles" {
     connection {
       host        = linode_instance.grafana.ip_address
       user        = "root"
+      password    = var.settings.grafana.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
     }
 
@@ -60,6 +64,7 @@ resource "null_resource" "grafanaFiles" {
     connection {
       host        = linode_instance.grafana.ip_address
       user        = "root"
+      password    = var.settings.grafana.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
     }
 
@@ -72,11 +77,12 @@ resource "null_resource" "grafanaFiles" {
     connection {
       host        = linode_instance.grafana.ip_address
       user        = "root"
+      password    = var.settings.grafana.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
     }
 
     inline = [
-      "docker run --rm -d --name grafana -p 443:3000 -v /root/grafana.ini:/etc/grafana/grafana.ini -v /root/cert.key:/etc/grafana/cert.key -v /root/cert.pem:/etc/grafana/cert.pem grafana/grafana"
+      "docker run --rm -d --name grafana -p 443:3000 -e GF_SECURITY_ADMIN_PASSWORD=\"${var.settings.grafana.defaultPassword}\" -v /root/grafana.ini:/etc/grafana/grafana.ini -v /root/cert.key:/etc/grafana/cert.key -v /root/cert.pem:/etc/grafana/cert.pem grafana/grafana"
     ]
   }
 

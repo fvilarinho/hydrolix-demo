@@ -5,6 +5,7 @@ resource "linode_instance" "probeStorage" {
   type            = var.settings.probes.storage.nodeType
   image           = var.settings.probes.storage.nodeImage
   region          = var.settings.probes.storage.region
+  root_pass       = var.settings.probes.defaultPassword
   authorized_keys = [ chomp(file(pathexpand(var.settings.probes.storage.sshPublicKeyFilename))) ]
 
   # Initialization script.
@@ -13,6 +14,7 @@ resource "linode_instance" "probeStorage" {
     connection {
       host        = self.ip_address
       user        = "root"
+      password    = var.settings.probes.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.probes.storage.sshPrivateKeyFilename)))
     }
 

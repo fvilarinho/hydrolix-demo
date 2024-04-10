@@ -6,6 +6,7 @@ resource "linode_instance" "probes" {
   type            = var.settings.probes.nodeType
   image           = var.settings.probes.nodeImage
   region          = each.value.region
+  root_pass       = var.settings.probes.defaultPassword
   authorized_keys = [chomp(file(pathexpand(var.settings.probes.sshPublicKeyFilename)))]
 
   # Initialization script.
@@ -14,6 +15,7 @@ resource "linode_instance" "probes" {
     connection {
       host        = self.ip_address
       user        = "root"
+      password    = var.settings.probes.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
     }
 
@@ -42,6 +44,7 @@ resource "null_resource" "probeFiles" {
     connection {
       host        = linode_instance.probes[each.key].ip_address
       user        = "root"
+      password    = var.settings.probes.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
     }
 
@@ -54,6 +57,7 @@ resource "null_resource" "probeFiles" {
     connection {
       host        = linode_instance.probes[each.key].ip_address
       user        = "root"
+      password    = var.settings.probes.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
     }
 
@@ -67,6 +71,7 @@ resource "null_resource" "probeFiles" {
     connection {
       host        = linode_instance.probes[each.key].ip_address
       user        = "root"
+      password    = var.settings.probes.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
     }
 

@@ -5,5 +5,6 @@ resource "linode_instance" "probeSecurity" {
   type            = var.settings.probes.securityTests.nodeType
   image           = var.settings.probes.securityTests.nodeImage
   region          = var.settings.probes.securityTests.region
+  root_pass       = var.settings.probes.defaultPassword
   authorized_keys = [ chomp(file(pathexpand(var.settings.probes.securityTests.sshPublicKeyFilename))) ]
 }
