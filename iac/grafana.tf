@@ -1,4 +1,4 @@
-# Definition of the grafana instance.
+# Definition of the Grafana instance.
 resource "linode_instance" "grafana" {
   label           = var.settings.grafana.prefix
   tags            = var.settings.grafana.tags
@@ -32,6 +32,7 @@ resource "linode_instance" "grafana" {
   }
 }
 
+# Creates the Grafana configuration file.
 resource "local_file" "grafanaConfiguration" {
   filename = var.settings.grafana.configurationFilename
   content = <<EOT
@@ -43,6 +44,7 @@ protocol       = https
 EOT
 }
 
+# Uploads Grafana files.
 resource "null_resource" "grafanaFiles" {
   provisioner "file" {
     # Remote connection attributes.
@@ -57,6 +59,7 @@ resource "null_resource" "grafanaFiles" {
     destination = "/root/${var.settings.grafana.configurationFilename}"
   }
 
+  # Copies certificates files.
   provisioner "file" {
     # Remote connection attributes.
     connection {
@@ -83,6 +86,7 @@ resource "null_resource" "grafanaFiles" {
     destination = "/root/${var.settings.hydrolix.certificateFilename}"
   }
 
+  # Starts Grafana.
   provisioner "remote-exec" {
     # Remote connection attributes.
     connection {

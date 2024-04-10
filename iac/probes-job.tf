@@ -1,4 +1,4 @@
-# Definition of the probe cron job.
+# Definition of the probes job.
 resource "local_file" "probesJob" {
   for_each = { for test in var.settings.probes.tests : test.id => test }
   filename = "${var.settings.probes.prefix}-${each.value.region}-${each.key}.job"
