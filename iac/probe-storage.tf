@@ -32,3 +32,33 @@ resource "linode_instance" "probeStorage" {
     ]
   }
 }
+
+resource "linode_firewall" "probeStorage" {
+  label           = "${var.settings.probes.prefix}-${var.settings.probes.storage.prefix}-firewall"
+  inbound_policy  = "DROP"
+  outbound_policy = "ACCEPT"
+  linodes         = [ linode_instance.probeStorage.id ]
+
+  inbound {
+    label    = "allow_${var.settings.grafana.prefix}"
+    protocol = "TCP"
+    ipv4     = [ "${linode_instance.grafana.ip_address}/32" ]
+    action   = "ACCEPT"
+  }
+
+  dynamic "inbound" {
+    for_each = var.settings.probes.tests
+
+    content {
+      label    = "allow_${linode_instance.probes[inbound.value.id].label}"
+      protocol = "TCP"
+      ipv4     = [ "${linode_instance.probes[inbound.value.id].ip_address}/32" ]
+      action   = "ACCEPT"
+    }
+  }
+
+  depends_on = [
+    linode_instance.grafana,
+    linode_instance.probes
+  ]
+}

@@ -87,3 +87,26 @@ resource "null_resource" "probeFiles" {
     local_file.probesTest
   ]
 }
+
+resource "linode_firewall" "probes" {
+  label           = "${var.settings.probes.prefix}-firewall"
+  inbound_policy  = "DROP"
+  outbound_policy = "ACCEPT"
+
+  inbound {
+    label    = "allowed_ips"
+    protocol = "TCP"
+    ipv4     = var.settings.probes.allowedIps
+    action   = "ACCEPT"
+  }
+}
+
+resource "linode_firewall_device" "probes" {
+  for_each    = {for test in var.settings.probes.tests : test.id => test}
+  entity_id   = linode_instance.probes[each.key].id
+  firewall_id = linode_firewall.probes.id
+  depends_on  = [
+    linode_firewall.probes,
+    linode_instance.probes
+  ]
+}

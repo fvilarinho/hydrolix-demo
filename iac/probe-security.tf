@@ -8,3 +8,12 @@ resource "linode_instance" "probeSecurity" {
   root_pass       = var.settings.probes.defaultPassword
   authorized_keys = [ chomp(file(pathexpand(var.settings.probes.securityTests.sshPublicKeyFilename))) ]
 }
+
+resource "linode_firewall_device" "probeSecurity" {
+  entity_id   = linode_instance.probeSecurity.id
+  firewall_id = linode_firewall.probes.id
+  depends_on  = [
+    linode_firewall.probes,
+    linode_instance.probeSecurity
+  ]
+}
