@@ -38,25 +38,36 @@ variable "settings" {
       scriptsDirectory        = "bin"
       configurationsDirectory = "etc"
       logsDirectory           = "logs"
-      storageHostname         = "<storageHostname>"
+      storage                 = {
+        prefix                  = "storage"
+        tags                    = [ "probes", "observability" ]
+        region                  = "<region>"
+        nodeType                = "g6-standard-2"
+        nodeImage               = "linode/debian11"
+        sshPrivateKeyFilename   = "~/.ssh/id_rsa"
+        sshPublicKeyFilename    = "~/.ssh/id_rsa.pub"
+      }
       tests                   = [
         {
-          id      = 1
-          region  = "<region>"
-          url     = "<url>"
-          browser = "<browser>"
+          id          = 1
+          region      = "<region>"
+          url         = "<url>"
+          browser     = "<browser>"
+          pollingTime = 1
         },
         {
-          id      = 2
-          region  = "<region>"
-          url     = "<url>"
-          browser = "<browser>"
+          id          = 2
+          region      = "<region>"
+          url         = "<url>"
+          browser     = "<browser>"
+          pollingTime = 1
         },
         {
-          id      = 3
-          region  = "<region>"
-          url     = "<url>"
-          browser = "<browser>"
+          id          = 3
+          region      = "<region>"
+          url         = "<url>"
+          browser     = "<browser>"
+          pollingTime = 1
         }
       ]
       allowedIps = [ "<ip>/<mask>" ]

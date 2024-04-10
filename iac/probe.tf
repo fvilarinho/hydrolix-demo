@@ -1,12 +1,12 @@
 # Definition of the probes instances.
 resource "linode_instance" "probes" {
-  for_each        = { for test in var.settings.probes.tests : test.id => test }
+  for_each        = {for test in var.settings.probes.tests : test.id => test}
   label           = "${var.settings.probes.prefix}-${each.value.region}-${each.key}"
   tags            = var.settings.probes.tags
   type            = var.settings.probes.nodeType
   image           = var.settings.probes.nodeImage
   region          = each.value.region
-  authorized_keys = [ chomp(file(pathexpand(var.settings.probes.sshPublicKeyFilename))) ]
+  authorized_keys = [chomp(file(pathexpand(var.settings.probes.sshPublicKeyFilename)))]
 
   # Initialization script.
   provisioner "remote-exec" {
@@ -32,11 +32,15 @@ resource "linode_instance" "probes" {
       "mkdir -p ${var.settings.probes.workDirectory}/${var.settings.probes.logsDirectory}"
     ]
   }
+}
+
+resource "null_resource" "probeFiles" {
+  for_each = {for test in var.settings.probes.tests : test.id => test}
 
   # Copies the cron job.
   provisioner "file" {
     connection {
-      host        = self.ip_address
+      host        = linode_instance.probes[each.key].ip_address
       user        = "root"
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
     }
@@ -48,7 +52,7 @@ resource "linode_instance" "probes" {
   # Copies the job script.
   provisioner "file" {
     connection {
-      host        = self.ip_address
+      host        = linode_instance.probes[each.key].ip_address
       user        = "root"
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
     }
@@ -61,7 +65,7 @@ resource "linode_instance" "probes" {
   provisioner "remote-exec" {
     # Remote connection attributes.
     connection {
-      host        = self.ip_address
+      host        = linode_instance.probes[each.key].ip_address
       user        = "root"
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
     }
@@ -73,6 +77,7 @@ resource "linode_instance" "probes" {
   }
 
   depends_on = [
+    linode_instance.probeStorage,
     local_file.probesJob,
     local_file.probesTest
   ]

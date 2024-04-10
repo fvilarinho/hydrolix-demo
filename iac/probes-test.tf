@@ -12,7 +12,7 @@ export LOGS_DIR="$WORK_DIR/${var.settings.probes.logsDirectory}"
 export LOG_FILENAME="${var.settings.probes.prefix}.log"
 export BROWSER="${each.value.browser}"
 export URL="${each.value.url}"
-export STORAGE_HOSTNAME="${var.settings.probes.storageHostname}"
+export STORAGE_HOSTNAME="${linode_instance.probeStorage.ip_address}"
 
 # Run the test.
 docker run --rm \
