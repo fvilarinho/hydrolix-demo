@@ -19,7 +19,7 @@ variable "settings" {
       version                  = "1.28"
       region                   = "<region>"
       nodeType                 = "g6-standard-6"
-      defaultNodeCount         = 6
+      defaultNodeCount         = 4
       minNodeCount             = 3
       maxNodeCount             = 6
       configurationFilename    = ".kubeconfig"
@@ -36,6 +36,7 @@ variable "settings" {
       sshPrivateKeyFilename   = "~/.ssh/id_rsa"
       sshPublicKeyFilename    = "~/.ssh/id_rsa.pub"
       defaultPassword         = "<password>"
+      configurationFilename   = "grafana.ini"
     }
     probes = {
       prefix                  = "probe"

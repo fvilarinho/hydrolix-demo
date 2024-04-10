@@ -8,3 +8,4 @@
 /iac/probe*.job
 /iac/probe*.sh
 /iac/terraform.tf*
+/iac/grafana.ini
