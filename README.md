@@ -4,6 +4,8 @@
 This application has the intention to demonstrate how to enable observability (collection of metrics, traces & logs) in 
 an application under Akamai and store the data in Hydrolix.
 
+It uses probes to generate traffic and also test security.
+
 It also provides some dashboards for Data Visualization tool Grafana. You just need to import 
 them.
 
