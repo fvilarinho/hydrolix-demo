@@ -37,8 +37,8 @@ After the credentials are defined, just execute the shell script `deploy.sh` to 
 `undeploy.sh` for de-provisioning.
 
 ### To access
-To access the Hydrolix UI, just open your browser and type the URL: `[http|https]://hydrolix.<domain>` and to access the
-Grafana UI, just open your browser and type the URL: `[http|https]://grafana.<domain>`. After that the login prompt will
+To access the Hydrolix UI, just open your browser and type the URL: `[http|https]://<hydrolix-node-balancer-ip>` and to access the
+Grafana UI, just open your browser and type the URL: `[http|https]://<grafana-ip>`. After that the login prompt will
 appear.
 
 ## 4. Settings
