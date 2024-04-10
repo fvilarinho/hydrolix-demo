@@ -27,6 +27,15 @@ variable "settings" {
       manifestFilename         = "manifest.yaml"
       deployScriptFilename     = "deployHydrolix.sh"
     }
+    grafana = {
+      prefix                  = "grafana"
+      tags                    = [ "dataviz", "observability" ]
+      region                  = "<region>"
+      nodeType                = "g6-standard-2"
+      nodeImage               = "linode/debian11"
+      sshPrivateKeyFilename   = "~/.ssh/id_rsa"
+      sshPublicKeyFilename    = "~/.ssh/id_rsa.pub"
+    }
     probes = {
       prefix                  = "probe"
       tags                    = [ "probes", "observability" ]
