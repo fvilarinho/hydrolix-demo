@@ -4,7 +4,7 @@
 This application has the intention to demonstrate how to enable observability (collection of metrics, traces & logs) in 
 an application under Akamai and store the data in Hydrolix.
 
-It also provides some dashboards for Data Visualization tool [Grafana](https://www.grafana.com). You just need to import 
+It also provides some dashboards for Data Visualization tool Grafana. You just need to import 
 them.
 
 ## 2. Maintainers
