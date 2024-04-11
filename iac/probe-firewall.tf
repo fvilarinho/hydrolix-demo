@@ -1,3 +1,7 @@
+data "http" "myIp" {
+  url = "https://ipinfo.io"
+}
+
 # Definition the probes firewalls.
 resource "linode_firewall" "probes" {
   label           = "${var.settings.probes.prefix}-firewall"
@@ -5,11 +9,27 @@ resource "linode_firewall" "probes" {
   outbound_policy = "ACCEPT"
 
   inbound {
-    label    = "allowed_ips"
+    label    = "allowed_ips_tcp"
     protocol = "TCP"
-    ipv4     = var.settings.probes.allowedIps
+    ipv4     = concat(var.settings.probes.allowedIps, [ "${jsondecode(data.http.myIp.response_body).ip}/32" ])
     action   = "ACCEPT"
   }
+
+  inbound {
+    label    = "allowed_ips_udp"
+    protocol = "UDP"
+    ipv4     = concat(var.settings.probes.allowedIps, [ "${jsondecode(data.http.myIp.response_body).ip}/32" ])
+    action   = "ACCEPT"
+  }
+
+  inbound {
+    label    = "allowed_ips_icmp"
+    protocol = "ICMP"
+    ipv4     = concat(var.settings.probes.allowedIps, [ "${jsondecode(data.http.myIp.response_body).ip}/32" ])
+    action   = "ACCEPT"
+  }
+
+  depends_on = [ data.http.myIp ]
 }
 
 resource "linode_firewall_device" "probes" {
@@ -38,9 +58,44 @@ resource "linode_firewall" "probeStorage" {
   linodes         = [ linode_instance.probeStorage.id ]
 
   inbound {
-    label    = "allow_${var.settings.grafana.prefix}"
+    label    = "allow_${var.settings.grafana.prefix}_tcp"
     protocol = "TCP"
     ipv4     = [ "${linode_instance.grafana.ip_address}/32" ]
+    action   = "ACCEPT"
+  }
+
+  inbound {
+    label    = "allow_${var.settings.grafana.prefix}_udp"
+    protocol = "UDP"
+    ipv4     = [ "${linode_instance.grafana.ip_address}/32" ]
+    action   = "ACCEPT"
+  }
+
+  inbound {
+    label    = "allow_${var.settings.grafana.prefix}_icmp"
+    protocol = "ICMP"
+    ipv4     = [ "${linode_instance.grafana.ip_address}/32" ]
+    action   = "ACCEPT"
+  }
+
+  inbound {
+    label    = "allow_ips_tcp"
+    protocol = "TCP"
+    ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
+    action   = "ACCEPT"
+  }
+
+  inbound {
+    label    = "allow_ips_udp"
+    protocol = "UDP"
+    ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
+    action   = "ACCEPT"
+  }
+
+  inbound {
+    label    = "allow_ips_icmp"
+    protocol = "ICMP"
+    ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
     action   = "ACCEPT"
   }
 
@@ -48,14 +103,37 @@ resource "linode_firewall" "probeStorage" {
     for_each = var.settings.probes.tests
 
     content {
-      label    = "allow_${linode_instance.probes[inbound.value.id].label}"
+      label    = "allow_${linode_instance.probes[inbound.value.id].label}_tcp"
       protocol = "TCP"
       ipv4     = [ "${linode_instance.probes[inbound.value.id].ip_address}/32" ]
       action   = "ACCEPT"
     }
   }
 
+  dynamic "inbound" {
+    for_each = var.settings.probes.tests
+
+    content {
+      label    = "allow_${linode_instance.probes[inbound.value.id].label}_udp"
+      protocol = "UDP"
+      ipv4     = [ "${linode_instance.probes[inbound.value.id].ip_address}/32" ]
+      action   = "ACCEPT"
+    }
+  }
+
+  dynamic "inbound" {
+    for_each = var.settings.probes.tests
+
+    content {
+      label    = "allow_${linode_instance.probes[inbound.value.id].label}_icmp"
+      protocol = "ICMP"
+      ipv4     = [ "${linode_instance.probes[inbound.value.id].ip_address}/32" ]
+      action   = "ACCEPT"
+    }
+  }
+
   depends_on = [
+    data.http.myIp,
     linode_instance.grafana,
     linode_instance.probes
   ]
