@@ -7,5 +7,6 @@
 /iac/operator.yaml
 /iac/probe*.job
 /iac/probe*.sh
-/iac/terraform.tf*
+/iac/terraform.tfstate*
+/iac/terraform.tfvars
 /iac/grafana.ini
