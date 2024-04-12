@@ -1,7 +1,3 @@
-data "http" "myIp" {
-  url = "https://ipinfo.io"
-}
-
 # Definition the probes firewalls.
 resource "linode_firewall" "probes" {
   label           = "${var.settings.probes.prefix}-firewall"
@@ -9,23 +5,23 @@ resource "linode_firewall" "probes" {
   outbound_policy = "ACCEPT"
 
   inbound {
-    label    = "allowed_ips_tcp"
+    label    = "allowed_myip_tcp"
     protocol = "TCP"
-    ipv4     = concat(var.settings.probes.allowedIps, [ "${jsondecode(data.http.myIp.response_body).ip}/32" ])
+    ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
     action   = "ACCEPT"
   }
 
   inbound {
-    label    = "allowed_ips_udp"
+    label    = "allowed_myip_udp"
     protocol = "UDP"
-    ipv4     = concat(var.settings.probes.allowedIps, [ "${jsondecode(data.http.myIp.response_body).ip}/32" ])
+    ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
     action   = "ACCEPT"
   }
 
   inbound {
-    label    = "allowed_ips_icmp"
+    label    = "allowed_myip_icmp"
     protocol = "ICMP"
-    ipv4     = concat(var.settings.probes.allowedIps, [ "${jsondecode(data.http.myIp.response_body).ip}/32" ])
+    ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
     action   = "ACCEPT"
   }
 
@@ -79,21 +75,21 @@ resource "linode_firewall" "probeStorage" {
   }
 
   inbound {
-    label    = "allow_ips_tcp"
+    label    = "allow_myip_tcp"
     protocol = "TCP"
     ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
     action   = "ACCEPT"
   }
 
   inbound {
-    label    = "allow_ips_udp"
+    label    = "allow_myip_udp"
     protocol = "UDP"
     ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
     action   = "ACCEPT"
   }
 
   inbound {
-    label    = "allow_ips_icmp"
+    label    = "allow_myip_icmp"
     protocol = "ICMP"
     ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
     action   = "ACCEPT"

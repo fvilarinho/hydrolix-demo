@@ -91,7 +91,6 @@ variable "settings" {
           pollingTime = 1
         }
       ]
-      allowedIps = [ "<ip>/<mask>" ]
     }
   }
 }
