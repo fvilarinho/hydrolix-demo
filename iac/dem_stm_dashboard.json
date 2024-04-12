@@ -285,7 +285,7 @@
           "target": "sitespeed.summary.*.*.*.coach.bestpractice.score.median"
         }
       ],
-      "title": "Best practives score",
+      "title": "Best practices score",
       "transparent": true,
       "type": "gauge"
     },
@@ -435,7 +435,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
+        "w": 8,
         "x": 0,
         "y": 10
       },
@@ -525,12 +525,37 @@
           },
           "unit": "ms"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "sitespeed.summary.www_vila_app_br.chrome.native.browsertime.pageTimings.serverConnectionTime.max"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 6,
+        "w": 8,
+        "x": 8,
         "y": 10
       },
       "id": 11,
@@ -623,8 +648,8 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 12,
+        "w": 8,
+        "x": 16,
         "y": 10
       },
       "id": 9,
@@ -717,9 +742,9 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 18,
-        "y": 10
+        "w": 8,
+        "x": 0,
+        "y": 18
       },
       "id": 14,
       "options": {
@@ -811,8 +836,8 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 0,
+        "w": 8,
+        "x": 8,
         "y": 18
       },
       "id": 10,
@@ -905,8 +930,8 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 6,
+        "w": 8,
+        "x": 16,
         "y": 18
       },
       "id": 8,
@@ -999,9 +1024,9 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 12,
-        "y": 18
+        "w": 8,
+        "x": 0,
+        "y": 26
       },
       "id": 12,
       "options": {
@@ -1029,6 +1054,100 @@
         }
       ],
       "title": "Download Time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "graphite",
+        "uid": "${DS_GRAPHITE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 26
+      },
+      "id": 16,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "graphite",
+            "uid": "${DS_GRAPHITE}"
+          },
+          "refId": "A",
+          "target": "sitespeed.summary.*.*.*.browsertime.visualMetrics.*.*"
+        }
+      ],
+      "title": "Visual render complete",
       "type": "timeseries"
     },
     {
@@ -1093,9 +1212,9 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 18,
-        "y": 18
+        "w": 8,
+        "x": 16,
+        "y": 26
       },
       "id": 13,
       "options": {
@@ -1131,206 +1250,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
-      },
-      "id": 15,
-      "panels": [],
-      "title": "Visuals",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "graphite",
-        "uid": "${DS_GRAPHITE}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "smooth",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "ms"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 27
-      },
-      "id": 16,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "graphite",
-            "uid": "${DS_GRAPHITE}"
-          },
-          "refId": "A",
-          "target": "sitespeed.summary.*.*.*.browsertime.visualMetrics.*.*"
-        }
-      ],
-      "title": "Visual render complete",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "graphite",
-        "uid": "${DS_GRAPHITE}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "smooth",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "ms"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 27
-      },
-      "id": 17,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "graphite",
-            "uid": "${DS_GRAPHITE}"
-          },
-          "refId": "A",
-          "target": "sitespeed.summary.*.*.*.browsertime.visualMetrics.*.*"
-        }
-      ],
-      "title": "Visual readiness",
-      "type": "timeseries"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 36
+        "y": 34
       },
       "id": 19,
       "panels": [],
@@ -1362,7 +1282,7 @@
         "h": 10,
         "w": 8,
         "x": 0,
-        "y": 37
+        "y": 35
       },
       "id": 18,
       "options": {
@@ -1371,13 +1291,14 @@
           "placement": "bottom",
           "showLegend": true,
           "values": [
-            "percent"
+            "percent",
+            "value"
           ]
         },
         "pieType": "pie",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "sum"
           ],
           "fields": "",
           "values": false
@@ -1419,7 +1340,8 @@
               "viz": false
             }
           },
-          "mappings": []
+          "mappings": [],
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -1427,7 +1349,7 @@
         "h": 10,
         "w": 8,
         "x": 8,
-        "y": 37
+        "y": 35
       },
       "id": 20,
       "options": {
@@ -1436,13 +1358,14 @@
           "placement": "bottom",
           "showLegend": true,
           "values": [
-            "percent"
+            "percent",
+            "value"
           ]
         },
         "pieType": "pie",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "sum"
           ],
           "fields": "",
           "values": false
@@ -1492,7 +1415,7 @@
         "h": 10,
         "w": 8,
         "x": 16,
-        "y": 37
+        "y": 35
       },
       "id": 21,
       "options": {
@@ -1501,13 +1424,14 @@
           "placement": "bottom",
           "showLegend": true,
           "values": [
-            "percent"
+            "percent",
+            "value"
           ]
         },
         "pieType": "pie",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "sum"
           ],
           "fields": "",
           "values": false
@@ -1545,6 +1469,6 @@
   "timezone": "browser",
   "title": "Synthetic Monitoring Overview",
   "uid": "cdif78x9dtkw0a",
-  "version": 25,
+  "version": 29,
   "weekStart": ""
 }
