@@ -47,7 +47,10 @@ If you want to customize the stack by yourself, just edit the following files:
 template.
 as template.
 - `iac/main.tf`: Defines the required provisioning providers.
-- `iac/variables.tf`: Defines the provisioning variables.
+- `iac/variables.tf`: Defines the provisioning variables. There is sensitive information in this file so it's a best
+practice to use the `terraform.tfvars` file.
+- `iac/terraform.tfvars`: Customize the provisioning variables. Please use the file `iac/terraform.tfvars.template` as 
+template.
 - `iac/linode.tf`: Defines the Akamai Connected Cloud provider.
 - `iac/grafana.tf`: Defines the Grafana instances.
 - `iac/hydrolix.tf`: Defines the Hydrolix instances.
@@ -61,6 +64,8 @@ as template.
 - `iac/probe-job.tf`: Defines the jobs of the probes.
 - `iac/probe-test.tf`: Defines the tests of the probes.
 - `iac/akamai_ds2_*.json`: Defines the Dashboards and ingest configurations for Hydrolix.
+
+#### PLEASE DON'T COMMIT ANY CREDENTIALS OR SENSITIVE INFORMATION
 
 ## 5. Other resources
 - [Akamai Connected Cloud](https://www.linode.com/)
