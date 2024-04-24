@@ -1,3 +1,15 @@
+# Creates the Grafana configuration file.
+resource "local_file" "grafanaConfiguration" {
+  filename = var.settings.grafana.configurationFilename
+  content = <<EOT
+[server]
+cert_key       = /etc/grafana/${var.settings.hydrolix.certificateKeyFilename}
+cert_file      = /etc/grafana/${var.settings.hydrolix.certificateFilename}
+enforce_domain = false
+protocol       = https
+EOT
+}
+
 # Definition of the Grafana instance.
 resource "linode_instance" "grafana" {
   label           = var.settings.grafana.prefix
@@ -30,22 +42,7 @@ resource "linode_instance" "grafana" {
       "docker pull grafana/grafana"
     ]
   }
-}
 
-# Creates the Grafana configuration file.
-resource "local_file" "grafanaConfiguration" {
-  filename = var.settings.grafana.configurationFilename
-  content = <<EOT
-[server]
-cert_key       = /etc/grafana/${var.settings.hydrolix.certificateKeyFilename}
-cert_file      = /etc/grafana/${var.settings.hydrolix.certificateFilename}
-enforce_domain = false
-protocol       = https
-EOT
-}
-
-# Uploads Grafana files.
-resource "null_resource" "grafanaFiles" {
   provisioner "file" {
     # Remote connection attributes.
     connection {
