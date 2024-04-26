@@ -94,7 +94,8 @@ resource "linode_instance" "grafana" {
     }
 
     inline = [
-      "docker run --rm -d --name grafana -p 443:3000 -e GF_SECURITY_ADMIN_PASSWORD=\"${var.settings.grafana.defaultPassword}\" -v \"/root/${var.settings.grafana.configurationFilename}:/etc/grafana/grafana.ini\" -v \"/root/${var.settings.hydrolix.certificateKeyFilename}:/etc/grafana/${var.settings.hydrolix.certificateKeyFilename}\" -v \"/root/${var.settings.hydrolix.certificateFilename}:/etc/grafana/${var.settings.hydrolix.certificateFilename}\" grafana/grafana"
+      "docker volume create grafana_data",
+      "docker run --rm -d --name grafana -p 443:3000 -e GF_SECURITY_ADMIN_PASSWORD=\"${var.settings.grafana.defaultPassword}\" -v \"/root/${var.settings.grafana.configurationFilename}:/etc/grafana/grafana.ini\" -v \"/root/${var.settings.hydrolix.certificateKeyFilename}:/etc/grafana/${var.settings.hydrolix.certificateKeyFilename}\" -v \"/root/${var.settings.hydrolix.certificateFilename}:/etc/grafana/${var.settings.hydrolix.certificateFilename}\" -v grafana_data:/var/lib/grafana grafana/grafana"
     ]
   }
 
