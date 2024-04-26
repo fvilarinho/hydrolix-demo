@@ -39,6 +39,7 @@ resource "linode_instance" "grafana" {
       "systemctl enable cron",
       "curl https://get.docker.com | bash",
       "systemctl enable docker",
+      "docker volume create grafana_data",
       "docker pull grafana/grafana"
     ]
   }
@@ -46,7 +47,7 @@ resource "linode_instance" "grafana" {
   provisioner "file" {
     # Remote connection attributes.
     connection {
-      host        = linode_instance.grafana.ip_address
+      host        = self.ip_address
       user        = "root"
       password    = var.settings.grafana.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
@@ -60,7 +61,7 @@ resource "linode_instance" "grafana" {
   provisioner "file" {
     # Remote connection attributes.
     connection {
-      host        = linode_instance.grafana.ip_address
+      host        = self.ip_address
       user        = "root"
       password    = var.settings.grafana.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
@@ -73,7 +74,7 @@ resource "linode_instance" "grafana" {
   provisioner "file" {
     # Remote connection attributes.
     connection {
-      host        = linode_instance.grafana.ip_address
+      host        = self.ip_address
       user        = "root"
       password    = var.settings.grafana.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
@@ -87,20 +88,16 @@ resource "linode_instance" "grafana" {
   provisioner "remote-exec" {
     # Remote connection attributes.
     connection {
-      host        = linode_instance.grafana.ip_address
+      host        = self.ip_address
       user        = "root"
       password    = var.settings.grafana.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
     }
 
-    inline = [
-      "docker volume create grafana_data",
-      "docker run --rm -d --name grafana -p 443:3000 -e GF_SECURITY_ADMIN_PASSWORD=\"${var.settings.grafana.defaultPassword}\" -v \"/root/${var.settings.grafana.configurationFilename}:/etc/grafana/grafana.ini\" -v \"/root/${var.settings.hydrolix.certificateKeyFilename}:/etc/grafana/${var.settings.hydrolix.certificateKeyFilename}\" -v \"/root/${var.settings.hydrolix.certificateFilename}:/etc/grafana/${var.settings.hydrolix.certificateFilename}\" -v grafana_data:/var/lib/grafana grafana/grafana"
-    ]
+    inline = [ "docker run -d --name grafana -p 443:3000 -e GF_SECURITY_ADMIN_PASSWORD=\"${var.settings.grafana.defaultPassword}\" -v \"/root/${var.settings.grafana.configurationFilename}:/etc/grafana/grafana.ini\" -v \"/root/${var.settings.hydrolix.certificateKeyFilename}:/etc/grafana/${var.settings.hydrolix.certificateKeyFilename}\" -v \"/root/${var.settings.hydrolix.certificateFilename}:/etc/grafana/${var.settings.hydrolix.certificateFilename}\" -v grafana_data:/var/lib/grafana grafana/grafana" ]
   }
 
   depends_on = [
-    linode_instance.grafana,
     local_file.grafanaConfiguration,
     tls_self_signed_cert.hydrolix
   ]

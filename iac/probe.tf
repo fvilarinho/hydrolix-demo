@@ -34,11 +34,19 @@ resource "linode_instance" "probes" {
       "mkdir -p ${var.settings.probes.workDirectory}/${var.settings.probes.logsDirectory}"
     ]
   }
+}
+
+resource "null_resource" "probeFiles" {
+  triggers = {
+    always_run = timestamp()
+  }
+
+  for_each = {for test in var.settings.probes.tests : test.id => test}
 
   # Copies the cron job.
   provisioner "file" {
     connection {
-      host        = self.ip_address
+      host        = linode_instance.probes[each.key].ip_address
       user        = "root"
       password    = var.settings.probes.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
@@ -51,7 +59,7 @@ resource "linode_instance" "probes" {
   # Copies the job script.
   provisioner "file" {
     connection {
-      host        = self.ip_address
+      host        = linode_instance.probes[each.key].ip_address
       user        = "root"
       password    = var.settings.probes.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
@@ -65,7 +73,7 @@ resource "linode_instance" "probes" {
   provisioner "remote-exec" {
     # Remote connection attributes.
     connection {
-      host        = self.ip_address
+      host        = linode_instance.probes[each.key].ip_address
       user        = "root"
       password    = var.settings.probes.defaultPassword
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
@@ -79,6 +87,7 @@ resource "linode_instance" "probes" {
 
   depends_on = [
     linode_instance.probeStorage,
+    linode_firewall.probes,
     local_file.probesJob,
     local_file.probesTest
   ]
