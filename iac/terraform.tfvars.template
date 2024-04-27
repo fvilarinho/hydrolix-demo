@@ -67,20 +67,7 @@ settings = {
         region      = "<region>"
         url         = "<url>"
         browser     = "<browser>"
-        pollingTime = 1
-      },
-      {
-        id          = 2
-        region      = "<region>"
-        url         = "<url>"
-        browser     = "<browser>"
-        pollingTime = 1
-      },
-      {
-        id          = 3
-        region      = "<region>"
-        url         = "<url>"
-        browser     = "<browser>"
+        credentials = ""
         pollingTime = 1
       }
     ]

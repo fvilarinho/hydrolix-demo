@@ -64,7 +64,7 @@ variable "settings" {
         tags                  = [ "probes", "security", "observability" ]
         region                = "<region>"
         nodeType              = "g6-standard-2"
-        nodeImage             = "linode/kali-linux"
+        nodeImage             = "linode/kali"
         sshPrivateKeyFilename = "~/.ssh/id_rsa"
         sshPublicKeyFilename  = "~/.ssh/id_rsa.pub"
       }
@@ -74,20 +74,7 @@ variable "settings" {
           region      = "<region>"
           url         = "<url>"
           browser     = "<browser>"
-          pollingTime = 1
-        },
-        {
-          id          = 2
-          region      = "<region>"
-          url         = "<url>"
-          browser     = "<browser>"
-          pollingTime = 1
-        },
-        {
-          id          = 3
-          region      = "<region>"
-          url         = "<url>"
-          browser     = "<browser>"
+          credentials = "<credentials>"
           pollingTime = 1
         }
       ]
