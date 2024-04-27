@@ -74,7 +74,6 @@ variable "settings" {
           region      = "<region>"
           url         = "<url>"
           browser     = "<browser>"
-          credentials = "<credentials>"
           pollingTime = 1
         }
       ]
