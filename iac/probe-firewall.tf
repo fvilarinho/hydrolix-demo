@@ -5,21 +5,21 @@ resource "linode_firewall" "probes" {
   outbound_policy = "ACCEPT"
 
   inbound {
-    label    = "allowed_myip_tcp"
+    label    = "allow_myip_tcp"
     protocol = "TCP"
     ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
     action   = "ACCEPT"
   }
 
   inbound {
-    label    = "allowed_myip_udp"
+    label    = "allow_myip_udp"
     protocol = "UDP"
     ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
     action   = "ACCEPT"
   }
 
   inbound {
-    label    = "allowed_myip_icmp"
+    label    = "allow_myip_icmp"
     protocol = "ICMP"
     ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
     action   = "ACCEPT"

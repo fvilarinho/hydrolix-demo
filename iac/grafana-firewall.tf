@@ -6,7 +6,7 @@ resource "linode_firewall" "grafana" {
   linodes         = [ linode_instance.grafana.id ]
 
   inbound {
-    label    = "allow_ips_http_https"
+    label    = "allow_http_https"
     protocol = "TCP"
     ports    = "80,443"
     ipv4     = [ "0.0.0.0/0" ]
@@ -14,7 +14,7 @@ resource "linode_firewall" "grafana" {
   }
 
   inbound {
-    label    = "allow_ips_ssh"
+    label    = "allow_ssh"
     protocol = "TCP"
     ports    = "22"
     ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
@@ -22,7 +22,7 @@ resource "linode_firewall" "grafana" {
   }
 
   inbound {
-    label    = "allow_ips_icmp"
+    label    = "allow_icmp"
     protocol = "ICMP"
     ipv4     = [ "${jsondecode(data.http.myIp.response_body).ip}/32" ]
     action   = "ACCEPT"
