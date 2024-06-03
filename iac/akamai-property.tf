@@ -8,7 +8,7 @@ data "external" "certificateSha1Fingerprint" {
 
 # Process the Property rules.
 data "akamai_property_rules_template" "rules" {
-  template_file = abspath("property/rules/main.json")
+  template_file = abspath("akamai-property/rules/main.json")
 
   # Definition of the Hydrolix origin.
   variables {
