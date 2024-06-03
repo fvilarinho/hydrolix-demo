@@ -1,6 +1,6 @@
 # Definition of the object storage access key.
 resource "linode_object_storage_key" "hydrolix" {
-  label = var.settings.hydrolix.label
+  label = var.settings.hydrolix.prefix
 
   # Definition of the permissions.
   bucket_access {

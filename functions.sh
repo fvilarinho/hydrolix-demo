@@ -22,12 +22,13 @@ function showBanner() {
 
 # Prepares the environment to execute the commands of this script.
 function prepareToExecute() {
-  # Required files/paths.
-  export WORK_DIR="$PWD/iac"
-
   # Required binaries.
   export TERRAFORM_CMD=$(which terraform)
   export KUBECTL_CMD=$(which kubectl)
+  export OPENSSL_CMD=$(which openssl)
+
+  # Environment variables.
+  export TERRAFORM_PLAN_FILENAME=/tmp/hydrolix-demo.plan
 }
 
 prepareToExecute

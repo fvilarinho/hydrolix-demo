@@ -14,7 +14,7 @@ function prepareToExecute() {
 # Deploys the LKE operator and manifest.
 function deploy() {
   $KUBECTL_CMD create namespace "$NAMESPACE" -o yaml --dry-run=client | $KUBECTL_CMD apply -f -
-  $KUBECTL_CMD create secret tls traefik-tls --key="$CERTIFICATE_KEY_FILENAME" --cert="$CERTIFICATE_FILENAME" -n "$NAMESPACE" -o yaml --dry-run=client | $KUBECTL_CMD apply -f -
+  $KUBECTL_CMD create secret tls traefik-tls --key="$CERTIFICATE_KEY_FILENAME" --cert="$CERTIFICATE_PEM_FILENAME" -n "$NAMESPACE" -o yaml --dry-run=client | $KUBECTL_CMD apply -f -
   $KUBECTL_CMD apply -f "$OPERATOR_FILENAME"
 
   # Waits until operator gets ready.

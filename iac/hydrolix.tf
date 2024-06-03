@@ -22,8 +22,8 @@ metadata:
   namespace: ${var.settings.hydrolix.namespace}
 spec:
   hydrolix_name: hdx
-  hydrolix_url: https://${var.settings.hydrolix.domain}
-  admin_email: ${var.settings.hydrolix.email}
+  hydrolix_url: https://${local.hydrolixHost}
+  admin_email: ${var.settings.general.email}
   db_bucket_region: ${data.linode_object_storage_cluster.hydrolix.id}
   db_bucket_url: https://${linode_object_storage_bucket.hydrolix.hostname}
   env:
@@ -51,8 +51,8 @@ resource "null_resource" "deployHydrolix" {
     environment = {
       NAMESPACE=var.settings.hydrolix.namespace
       CONFIGURATION_FILENAME=var.settings.hydrolix.configurationFilename
-      CERTIFICATE_KEY_FILENAME=var.settings.hydrolix.certificateKeyFilename
-      CERTIFICATE_FILENAME=var.settings.hydrolix.certificateFilename
+      CERTIFICATE_KEY_FILENAME=var.settings.general.certificate.keyFilename
+      CERTIFICATE_PEM_FILENAME=var.settings.general.certificate.pemFilename
       OPERATOR_FILENAME=var.settings.hydrolix.operatorFilename
       MANIFEST_FILENAME=var.settings.hydrolix.manifestFilename
     }

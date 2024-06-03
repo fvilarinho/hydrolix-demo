@@ -1,74 +1,108 @@
-# Credentials filename definition.
-variable "credentialsFilename" {
-  type    = string
-  default = ".credentials"
+variable "credentials" {
+  default = {
+    linodeToken          = "<linodeToken>"
+    edgeGridAccountKey   = "<edgeGridAccountKey>"
+    edgeGridHost         = "<edgeGridHost>"
+    edgeGridAccessToken  = "<edgeGridAccessToken>"
+    edgeGridClientToken  = "<edgeGridClientToken>"
+    edgeGridClientSecret = "<edgeGridClientSecret>"
+  }
 }
 
 # Settings definition.
 variable "settings" {
   default = {
+    general = {
+      email  = "<email>"
+      domain = "<domain>"
+
+      certificate = {
+        organization     = "<organization>"
+        organizationUnit = "<organizationUnit>"
+        street           = "<street>"
+        zipcode          = "<zipcode>"
+        city             = "<city>"
+        region           = "<region>"
+        country          = "<country>"
+        keyFilename      = "cert.key"
+        pemFilename      = "cert.pem"
+        validityHours    = 86400
+      }
+    }
+
+    akamai = {
+      contract = "<contract>"
+      group    = "<group>"
+
+      property = {
+        name      = "hydrolix-demo"
+        product   = "<product>"
+        ipVersion = "<ipVersion>"
+      }
+    }
+
     hydrolix = {
-      tags                     = [ "hydrolix", "observability" ]
-      email                    = "<email>"
-      domain                   = "<domain>"
-      certificateKeyFilename   = "cert.key"
-      certificateFilename      = "cert.pem"
-      certificateValidityHours = 86400
-      namespace                = "hydrolix"
-      label                    = "hydrolix"
-      version                  = "1.28"
-      region                   = "<region>"
-      nodeType                 = "g6-standard-6"
-      defaultNodeCount         = 4
-      minNodeCount             = 3
-      maxNodeCount             = 6
-      configurationFilename    = ".kubeconfig"
-      operatorFilename         = "operator.yaml"
-      manifestFilename         = "manifest.yaml"
-      deployScriptFilename     = "deployHydrolix.sh"
+      prefix                = "hydrolix-demo"
+      tags                  = [ "hydrolix", "observability" ]
+      namespace             = "hydrolix"
+      version               = "<version>"
+      region                = "<region>"
+      nodeType              = "<nodeType>"
+      defaultNodeCount      = 6
+      minNodeCount          = 4
+      maxNodeCount          = 10
+      configurationFilename = ".kubeconfig"
+      operatorFilename      = "operator.yaml"
+      manifestFilename      = "manifest.yaml"
+      deployScriptFilename  = "deployHydrolix.sh"
     }
+
     grafana = {
-      prefix                  = "grafana"
-      tags                    = [ "dataviz", "observability" ]
-      region                  = "<region>"
-      nodeType                = "g6-standard-2"
-      nodeImage               = "linode/debian11"
-      sshPrivateKeyFilename   = "~/.ssh/id_rsa"
-      sshPublicKeyFilename    = "~/.ssh/id_rsa.pub"
-      defaultPassword         = "<password>"
-      configurationFilename   = "grafana.ini"
+      prefix                = "grafana"
+      tags                  = [ "dataviz", "observability" ]
+      region                = "<region>"
+      nodeType              = "<nodeType>"
+      nodeImage             = "linode/debian11"
+      sshPrivateKeyFilename = "~/.ssh/id_rsa"
+      sshPublicKeyFilename  = "~/.ssh/id_rsa.pub"
+      defaultPassword       = "<defaultPassword>"
+      configurationFilename = "grafana.ini"
     }
+
     probes = {
       prefix                  = "probe"
       tags                    = [ "probes", "observability" ]
-      nodeType                = "g6-nanode-1"
-      nodeImage               = "linode/debian11"
+      nodeType                = "<nodeType>"
+      nodeImage               = "<nodeImage>"
       sshPrivateKeyFilename   = "~/.ssh/id_rsa"
       sshPublicKeyFilename    = "~/.ssh/id_rsa.pub"
-      defaultPassword         = "<password>"
+      defaultPassword         = "<defaultPassword>"
       workDirectory           = "/opt/probe"
       scriptsDirectory        = "bin"
       configurationsDirectory = "etc"
       logsDirectory           = "logs"
-      storage                 = {
+
+      storage = {
         prefix                = "storage"
         tags                  = [ "probes", "storage", "observability" ]
         region                = "<region>"
-        nodeType              = "g6-standard-2"
-        nodeImage             = "linode/debian11"
+        nodeType              = "<nodeType>"
+        nodeImage             = "<nodeImage>"
         sshPrivateKeyFilename = "~/.ssh/id_rsa"
         sshPublicKeyFilename  = "~/.ssh/id_rsa.pub"
       }
-      securityTests           = {
+
+      securityTests = {
         prefix                = "security"
         tags                  = [ "probes", "security", "observability" ]
         region                = "<region>"
-        nodeType              = "g6-standard-2"
-        nodeImage             = "linode/kali"
+        nodeType              = "<nodeType>"
+        nodeImage             = "<nodeImage>"
         sshPrivateKeyFilename = "~/.ssh/id_rsa"
         sshPublicKeyFilename  = "~/.ssh/id_rsa.pub"
       }
-      tests                   = [
+
+      tests = [
         {
           id          = 1
           region      = "<region>"

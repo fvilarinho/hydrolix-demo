@@ -13,6 +13,17 @@ function checkDependencies() {
 
     exit 1
   fi
+
+  if [ -z "$OPENSSL_CMD" ]; then
+    echo "openssl is not installed! Please install it first to continue!"
+
+    exit 1
+  fi
+}
+
+# Clean-up.
+function cleanUp() {
+  rm -f "$TERRAFORM_PLAN_FILENAME"
 }
 
 # Prepares the environment to execute this script.
@@ -30,10 +41,12 @@ function deploy() {
                  -upgrade \
                  -migrate-state || exit 1
 
-  $TERRAFORM_CMD plan || exit 1
+  $TERRAFORM_CMD plan \
+                 -out "$TERRAFORM_PLAN_FILENAME" || exit 1
 
   $TERRAFORM_CMD apply \
-                 -auto-approve
+                 -auto-approve \
+                 "$TERRAFORM_PLAN_FILENAME"
 }
 
 # Main function.
@@ -41,6 +54,7 @@ function main() {
   prepareToExecute
   checkDependencies
   deploy
+  cleanUp
 }
 
 main

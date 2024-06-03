@@ -1,0 +1,56 @@
+{
+  "rules": {
+    "name": "default",
+    "behaviors": [
+      {
+        "name": "origin",
+        "options": {
+          "cacheKeyHostname": "REQUEST_HOST_HEADER",
+          "compress": true,
+          "customValidCnValues": [
+            "{{Origin Hostname}}",
+            "{{Forward Host Header}}"
+          ],
+          "enableTrueClientIp": true,
+          "forwardHostHeader": "REQUEST_HOST_HEADER",
+          "hostname": "${env.hydrolixOrigin}",
+          "httpPort": 80,
+          "httpsPort": 443,
+          "originCertsToHonor": "CUSTOM_CERTIFICATES",
+          "originSni": true,
+          "originType": "CUSTOMER",
+          "verificationMode": "CUSTOM",
+          "ipVersion": "IPV4",
+          "minTlsVersion": "DYNAMIC",
+          "tls13Support": false,
+          "trueClientIpClientSetting": false,
+          "trueClientIpHeader": "True-Client-IP",
+          "customCertificates": [
+            {
+              "pemEncodedCert": "${env.certificatePem}",
+              "sha1Fingerprint": "${env.certificateSha1Fingerprint}",
+              "subjectCN": "${env.certificateCommonName}",
+              "subjectAlternativeNames": [
+                "${env.hydrolixHost}",
+                "${env.grafanaHost}",
+                "${env.hydrolixOrigin}",
+                "${env.grafanaOrigin}"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "children": [
+      "#include:Grafana_Origin.json",
+      "#include:Augment_insights.json",
+      "#include:Accelerate_Delivery.json",
+      "#include:Offload_origin.json",
+      "#include:Strengthen_security.json",
+      "#include:Increase_availability.json",
+      "#include:Minimize_payload.json"
+    ],
+    "comments": "The Default Rule template contains all the necessary and recommended features. Rules are evaluated from top to bottom and the last matching rule wins.",
+    "options": {}
+  }
+}
