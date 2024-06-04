@@ -20,7 +20,7 @@ resource "akamai_dns_record" "certificateValidation" {
 # Definition of the Edge DNS Grafana entries.
 resource "akamai_dns_record" "grafana" {
   zone       = var.settings.general.domain
-  name       = local.grafanaHost
+  name       = local.grafanaHostname
   recordtype = "CNAME"
   ttl        = 30
   target     = [ akamai_edge_hostname.default.edge_hostname ]
@@ -29,7 +29,7 @@ resource "akamai_dns_record" "grafana" {
 
 resource "akamai_dns_record" "grafanaOrigin" {
   zone       = var.settings.general.domain
-  name       = local.grafanaOrigin
+  name       = local.grafanaOriginHostname
   recordtype = "A"
   ttl        = 30
   target     = [ linode_instance.grafana.ip_address ]
@@ -37,20 +37,9 @@ resource "akamai_dns_record" "grafanaOrigin" {
 }
 
 # Definition of the Edge DNS Hydrolix entries.
-data "external" "hydrolixOrigin" {
-  program    = [ abspath(pathexpand("./hydrolixOrigin.sh")) ]
-  query      = {
-    CONFIGURATION_FILENAME=abspath(pathexpand(var.settings.hydrolix.configurationFilename))
-  }
-  depends_on = [
-    linode_lke_cluster.hydrolix,
-    null_resource.deployHydrolix,
-  ]
-}
-
 resource "akamai_dns_record" "hydrolix" {
   zone       = var.settings.general.domain
-  name       = local.hydrolixHost
+  name       = local.hydrolixHostname
   recordtype = "CNAME"
   ttl        = 30
   target     = [ akamai_edge_hostname.default.edge_hostname ]
@@ -59,7 +48,7 @@ resource "akamai_dns_record" "hydrolix" {
 
 resource "akamai_dns_record" "hydrolixOrigin" {
   zone       = var.settings.general.domain
-  name       = local.hydrolixOrigin
+  name       = local.hydrolixOriginHostname
   recordtype = "CNAME"
   ttl        = 30
   target     = [ data.external.hydrolixOrigin.result.hostname ]
