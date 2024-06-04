@@ -1,13 +1,7 @@
-# Creates the Grafana configuration file.
-resource "local_file" "grafanaConfiguration" {
-  filename = var.settings.grafana.configurationFilename
-  content = <<EOT
-[server]
-cert_key       = /etc/grafana/${var.settings.general.certificate.keyFilename}
-cert_file      = /etc/grafana/${var.settings.general.certificate.pemFilename}
-enforce_domain = false
-protocol       = https
-EOT
+locals {
+  grafanaHostname              = "${var.settings.grafana.prefix}.${var.settings.general.domain}"
+  grafanaOriginHostname        = "origin-${local.grafanaHostname}"
+  grafanaConfigurationFilename = "../etc/grafana/grafana.ini"
 }
 
 # Definition of the Grafana instance.
@@ -53,8 +47,8 @@ resource "linode_instance" "grafana" {
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
     }
 
-    source      = var.settings.grafana.configurationFilename
-    destination = "/root/${var.settings.grafana.configurationFilename}"
+    source      = abspath(pathexpand(local.grafanaConfigurationFilename))
+    destination = "/root/grafana.ini"
   }
 
   # Copies certificates files.
@@ -67,8 +61,8 @@ resource "linode_instance" "grafana" {
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
     }
 
-    source      = var.settings.general.certificate.keyFilename
-    destination = "/root/${var.settings.general.certificate.keyFilename}"
+    source      = abspath(pathexpand(var.settings.general.certificate.keyFilename))
+    destination = "/root/cert.key"
   }
 
   provisioner "file" {
@@ -80,8 +74,8 @@ resource "linode_instance" "grafana" {
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
     }
 
-    source      = var.settings.general.certificate.pemFilename
-    destination = "/root/${var.settings.general.certificate.pemFilename}"
+    source      = abspath(pathexpand(var.settings.general.certificate.pemFilename))
+    destination = "/root/cert.pem"
   }
 
   # Starts Grafana.
@@ -94,11 +88,8 @@ resource "linode_instance" "grafana" {
       private_key = chomp(file(pathexpand(var.settings.grafana.sshPrivateKeyFilename)))
     }
 
-    inline = [ "docker run -d --name grafana -p 443:3000 -e GF_SECURITY_ADMIN_PASSWORD=\"${var.settings.grafana.defaultPassword}\" -v \"/root/${var.settings.grafana.configurationFilename}:/etc/grafana/grafana.ini\" -v \"/root/${var.settings.general.certificate.keyFilename}:/etc/grafana/${var.settings.general.certificate.keyFilename}\" -v \"/root/${var.settings.general.certificate.pemFilename}:/etc/grafana/${var.settings.general.certificate.pemFilename}\" -v grafana_data:/var/lib/grafana grafana/grafana" ]
+    inline = [ "docker run -d --name grafana -p 443:3000 -e GF_SECURITY_ADMIN_PASSWORD=\"${var.settings.grafana.defaultPassword}\" -v \"/root/grafana.ini:/etc/grafana/grafana.ini\" -v \"/root/cert.key:/etc/grafana/cert.key\" -v \"/root/cert.pem:/etc/grafana/cert.pem\" -v grafana_data:/var/lib/grafana grafana/grafana" ]
   }
 
-  depends_on = [
-    local_file.grafanaConfiguration,
-    tls_self_signed_cert.default
-  ]
+  depends_on = [ tls_self_signed_cert.default ]
 }
