@@ -1,6 +1,11 @@
+# Definition of required local variables.
+locals {
+  certificateSha1FingerprintScriptFilename = "../bin/tls/fetchSha1Fingerprint.sh"
+}
+
 # Retrieve the TLS certificate fingerprint used in the pinning.
 data "external" "certificateSha1Fingerprint" {
-  program = [ abspath(pathexpand("./certificateSha1Fingerprint.sh")) ]
+  program = [ abspath(pathexpand(local.certificateSha1FingerprintScriptFilename)) ]
   query   = {
     CERTIFICATE_PEM_FILENAME = abspath(pathexpand(var.settings.general.certificate.pemFilename))
   }
@@ -8,34 +13,34 @@ data "external" "certificateSha1Fingerprint" {
 
 # Process the Property rules.
 data "akamai_property_rules_template" "rules" {
-  template_file = abspath("akamai-property/rules/main.json")
+  template_file = abspath(pathexpand(var.settings.akamai.property.rulesFilename))
 
   # Definition of the Hydrolix origin.
   variables {
-    name  = "hydrolixOrigin"
+    name  = "hydrolixOriginHostname"
     type  = "string"
-    value = local.hydrolixOrigin
+    value = local.hydrolixOriginHostname
   }
 
   # Definition of the Hydrolix hostname.
   variables {
-    name  = "hydrolixHost"
+    name  = "hydrolixHostname"
     type  = "string"
-    value = local.hydrolixHost
+    value = local.hydrolixHostname
   }
 
   # Definition of the Grafana origin.
   variables {
-    name  = "grafanaOrigin"
+    name  = "grafanaOriginHostname"
     type  = "string"
-    value = local.grafanaOrigin
+    value = local.grafanaOriginHostname
   }
 
   # Definition of the Grafana hostname.
   variables {
-    name  = "grafanaHost"
+    name  = "grafanaHostname"
     type  = "string"
-    value = local.grafanaHost
+    value = local.grafanaHostname
   }
 
   variables {
@@ -81,14 +86,14 @@ resource "akamai_property" "default" {
 
   # Definition of the Grafana hostname/edge hostname.
   hostnames {
-    cname_from             = local.grafanaHost
+    cname_from             = local.grafanaHostname
     cname_to               = akamai_edge_hostname.default.edge_hostname
     cert_provisioning_type = "DEFAULT"
   }
 
   # Definition of the Hydrolix hostname/edge hostname.
   hostnames {
-    cname_from             = local.hydrolixHost
+    cname_from             = local.hydrolixHostname
     cname_to               = akamai_edge_hostname.default.edge_hostname
     cert_provisioning_type = "DEFAULT"
   }
