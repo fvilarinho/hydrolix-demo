@@ -2,17 +2,13 @@
 
 # Prepares the environment to execute this script.
 function prepareToExecute() {
-  cd .. || exit 1
+  cd ../../ || exit 1
 
   source functions.sh
-
-  cd iac || exit 1
-
-  export KUBECONFIG="$CONFIGURATION_FILENAME"
 }
 
-# Deploys the LKE operator and manifest.
-function deploy() {
+# Install the Hydrolix operator and manifest.
+function install() {
   $KUBECTL_CMD create namespace "$NAMESPACE" -o yaml --dry-run=client | $KUBECTL_CMD apply -f -
   $KUBECTL_CMD create secret tls traefik-tls --key="$CERTIFICATE_KEY_FILENAME" --cert="$CERTIFICATE_PEM_FILENAME" -n "$NAMESPACE" -o yaml --dry-run=client | $KUBECTL_CMD apply -f -
   $KUBECTL_CMD apply -f "$OPERATOR_FILENAME"
@@ -26,7 +22,7 @@ function deploy() {
 # Main function.
 function main() {
   prepareToExecute
-  deploy
+  install
 }
 
 main
