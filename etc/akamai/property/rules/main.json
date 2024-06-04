@@ -13,7 +13,7 @@
           ],
           "enableTrueClientIp": true,
           "forwardHostHeader": "REQUEST_HOST_HEADER",
-          "hostname": "${env.hydrolixOrigin}",
+          "hostname": "${env.hydrolixOriginHostname}",
           "httpPort": 80,
           "httpsPort": 443,
           "originCertsToHonor": "CUSTOM_CERTIFICATES",
@@ -31,10 +31,10 @@
               "sha1Fingerprint": "${env.certificateSha1Fingerprint}",
               "subjectCN": "${env.certificateCommonName}",
               "subjectAlternativeNames": [
-                "${env.hydrolixHost}",
-                "${env.grafanaHost}",
-                "${env.hydrolixOrigin}",
-                "${env.grafanaOrigin}"
+                "${env.hydrolixHostname}",
+                "${env.grafanaHostname}",
+                "${env.hydrolixOriginHostname}",
+                "${env.grafanaOriginHostname}"
               ]
             }
           ]
