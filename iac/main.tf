@@ -19,12 +19,6 @@ terraform {
 
 # Retrieve the local machine public IP.
 data "http" "myIp" {
-  url = "https://ipinfo.io"
-}
-
-locals {
-  grafanaHost    = "${var.settings.grafana.prefix}.${var.settings.general.domain}"
-  grafanaOrigin  = "origin-${local.grafanaHost}"
-  hydrolixHost   = "${var.settings.hydrolix.prefix}.${var.settings.general.domain}"
-  hydrolixOrigin = "origin-${local.hydrolixHost}"
+  url    = "https://ipinfo.io"
+  method = "GET"
 }

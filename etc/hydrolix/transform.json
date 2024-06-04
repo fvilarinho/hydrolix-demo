@@ -1,6 +1,6 @@
 {
-  "name": "akamai_ds2_transform",
-  "description": "Akamai DataStream 2 Transform",
+  "name": "ds2_transform",
+  "description": "Akamai DataStream 2 ingest transformation used to parse the ingest data and store it in the related table.",
   "settings": {
     "is_default": true,
     "null_values": [
