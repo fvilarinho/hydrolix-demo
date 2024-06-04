@@ -22,8 +22,8 @@ resource "linode_lke_cluster" "hydrolix" {
 }
 
 # Downloads the kubeconfig file to be able to connect in the LKE cluster after the provisioning.
-resource "local_sensitive_file" "hydrolixConfiguration" {
-  filename        = var.settings.hydrolix.configurationFilename
+resource "local_sensitive_file" "hydrolixKubeconfig" {
+  filename        = var.settings.hydrolix.kubeconfigFilename
   content_base64  = linode_lke_cluster.hydrolix.kubeconfig
   file_permission = "600"
   depends_on      = [ linode_lke_cluster.hydrolix ]
