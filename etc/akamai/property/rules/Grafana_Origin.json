@@ -30,8 +30,8 @@
             "subjectCN": "${env.certificateCommonName}",
             "subjectAlternativeNames": [
               "${env.hydrolixHostname}",
-              "${env.grafanaHostname}",
               "${env.hydrolixOriginHostname}",
+              "${env.grafanaHostname}",
               "${env.grafanaOriginHostname}"
             ]
           }
