@@ -36,6 +36,7 @@ resource "akamai_dns_record" "hydrolixOrigin" {
   depends_on = [ data.external.hydrolixOrigin ]
 }
 
+# Definition of the Edge DNS Probe storage entries.
 resource "akamai_dns_record" "probeStorageOrigin" {
   zone       = var.settings.general.domain
   name       = local.probeStorageOriginHostname
