@@ -1802,7 +1802,7 @@
       "type": "table"
     }
   ],
-  "refresh": "",
+  "refresh": "auto",
   "revision": 1,
   "schemaVersion": 39,
   "tags": [],
@@ -2711,7 +2711,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-30m",
     "to": "now-1m"
   },
   "timeRangeUpdatedDuringEditOrView": false,
@@ -2720,8 +2720,8 @@
     "nowDelay": "1m"
   },
   "timezone": "",
-  "title": "Akamai Observability",
+  "title": "Akamai DataStream 2",
   "uid": "adnuo7biavi80b",
-  "version": 3,
+  "version": 4,
   "weekStart": ""
 }
