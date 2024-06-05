@@ -7,18 +7,6 @@ function checkDependencies() {
 
     exit 1
   fi
-
-  if [ -z "$KUBECTL_CMD" ]; then
-    echo "kubectl is not installed! Please install it first to continue!"
-
-    exit 1
-  fi
-
-  if [ -z "$OPENSSL_CMD" ]; then
-    echo "openssl is not installed! Please install it first to continue!"
-
-    exit 1
-  fi
 }
 
 # Prepares the environment to execute this script.

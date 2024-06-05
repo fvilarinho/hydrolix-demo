@@ -14,6 +14,18 @@ function checkDependencies() {
     exit 1
   fi
 
+  if [ -z "$CURL_CMD" ]; then
+    echo "curl is not installed! Please install it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$JQ_CMD" ]; then
+    echo "jq is not installed! Please install it first to continue!"
+
+    exit 1
+  fi
+
   if [ -z "$OPENSSL_CMD" ]; then
     echo "openssl is not installed! Please install it first to continue!"
 
