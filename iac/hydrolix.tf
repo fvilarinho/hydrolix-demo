@@ -1,7 +1,8 @@
 # Definition of local variables.
 locals {
   hydrolixHostname              = "${var.settings.hydrolix.prefix}.${var.settings.general.domain}"
-  hydrolixUrl                   = "https://${local.hydrolixUrl}"
+  hydrolixUrl                   = "https://${local.hydrolixHostname}"
+  hydrolixOriginUrl             = "https://${data.external.hydrolixOrigin.result.hostname}"
   hydrolixOriginHostname        = "origin-${local.hydrolixHostname}"
   hydrolixOperatorUrl           = "https://www.hydrolix.io/operator/latest/operator-resources?namespace=${var.settings.hydrolix.namespace}"
   hydrolixInstallScriptFilename = "../bin/hydrolix/install.sh"
@@ -56,8 +57,8 @@ EOT
   ]
 }
 
-# Deploys Hydrolix in LKE.
-resource "null_resource" "deployHydrolix" {
+# Installs Hydrolix in LKE.
+resource "null_resource" "installHydrolix" {
   provisioner "local-exec" {
     environment = {
       KUBECONFIG=abspath(pathexpand(var.settings.hydrolix.kubeconfigFilename))
@@ -81,14 +82,15 @@ resource "null_resource" "deployHydrolix" {
 
 # Fetches the Hydrolix origin.
 data "external" "hydrolixOrigin" {
-  program    = [ abspath(pathexpand(local.hydrolixOriginScriptFilename)) ]
-  query      = {
-    KUBECONFIG=abspath(pathexpand(var.settings.hydrolix.kubeconfigFilename))
-    NAMESPACE=var.settings.hydrolix.namespace
-  }
+  program = [
+    abspath(pathexpand(local.hydrolixOriginScriptFilename)),
+    abspath(pathexpand(var.settings.hydrolix.kubeconfigFilename)),
+    var.settings.hydrolix.namespace
+  ]
+
   depends_on = [
     local_sensitive_file.hydrolixKubeconfig,
     linode_lke_cluster.hydrolix,
-    null_resource.deployHydrolix,
+    null_resource.installHydrolix,
   ]
 }
