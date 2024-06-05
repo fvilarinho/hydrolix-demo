@@ -37,33 +37,42 @@ After the credentials are defined, just execute the shell script `deploy.sh` to 
 `undeploy.sh` for de-provisioning.
 
 ### To access
-To access the Hydrolix UI, just open your browser and type the URL: `[http|https]://<hydrolix-node-balancer-ip>` and to access the
-Grafana UI, just open your browser and type the URL: `[http|https]://<grafana-ip>`. After that the login prompt will
-appear.
+To access the Hydrolix UI, just open your browser and type the URL: `[http|https]://<hydrolix-prefix>.<domain>` and to access the
+Grafana UI, just open your browser and type the URL: `[http|https]://<grafana-prefix>.<domain>`. After that the login prompt will
+appear. Please check these attributes in your provisioning variables.
 
 ## 4. Settings
 If you want to customize the stack by yourself, just edit the following files:
-- `iac/.credentials`: Defines the Akamai Connected Cloud credentials. Please use the file `iac/.credentials.template` as
-template.
-as template.
 - `iac/main.tf`: Defines the required provisioning providers.
 - `iac/variables.tf`: Defines the provisioning variables. There is sensitive information in this file so it's a best
 practice to use the `terraform.tfvars` file.
 - `iac/terraform.tfvars`: Customize the provisioning variables. Please use the file `iac/terraform.tfvars.template` as 
 template.
-- `iac/linode.tf`: Defines the Akamai Connected Cloud provider.
+- `iac/linode.tf`: Defines the Akamai Connected Cloud provider settings.
+- `iac/certificate.tf`: Defines the TLS certificate provisioning.
+- `iac/akamai.tf`: Defines the Akamai EdgeGrid provider settings.
+- `iac/akamai-cpcode.tf`: Defines the Akamai CPCode used by the Akamai Property.
+- `iac/akamai-datastream.tf`: Defines the Akamai DataStream 2 used to push the Akamai Property logs to Hydrolix.
+- `iac/akamai-edgedns.tf`: Defines the Akamai Edge DNS entries used by all provisioned resources.
+- `iac/akamai-edgehostname.tf`: Defines the Akamai Edge Hostname used by Akamai Property.
+- `iac/akamai-property.tf`: Defines the Akamai Property provisioning.
 - `iac/grafana.tf`: Defines the Grafana instances.
+- `iac/grafana-firewall.tf`: Defines the Grafana firewall rules.
 - `iac/hydrolix.tf`: Defines the Hydrolix instances.
-- `iac/hydrolix-certificate.tf`: Defines the Hydrolix certificates.
-- `iac/hydrolix-lke.tf`: Defines the Hydrolix kubernetes cluster.
+- `iac/hydrolix-lke.tf`: Defines the Hydrolix LKE cluster.
+- `iac/hydrolix-resources.tf`: Defines the Hydrolix resources (Project, Table & Transform) provisioning.
 - `iac/hydrolix-storage.tf`: Defines the Hydrolix storage.
 - `iac/hydrolix-storage-credentials.tf`: Defines the Hydrolix storage credentials.
 - `iac/probe.tf`: Defines the probes instances.
+- `iac/probe-firewall.tf`: Defines the probes firewall rules.
 - `iac/probe-security.tf`: Defines the security probe.
 - `iac/probe-storage.tf`: Defines the storage of the probes.
 - `iac/probe-job.tf`: Defines the jobs of the probes.
 - `iac/probe-test.tf`: Defines the tests of the probes.
-- `iac/akamai_ds2_*.json`: Defines the Dashboards and ingest configurations for Hydrolix.
+- `etc/akamai/property/rules/*.json`: Defines the ruletree for the Akamai Property.
+- `etc/grafana/*_dashboard.json`: Defines the default dashboards for Grafana.
+- `etc/grafana/grafana.ini`: Defines the default settings for Grafana.
+- `etc/hydrolix/*.json`: Defines the Hydrolix resources (Project, Table & Transform).
 
 #### PLEASE DON'T COMMIT ANY CREDENTIALS OR SENSITIVE INFORMATION
 
