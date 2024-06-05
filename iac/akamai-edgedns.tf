@@ -35,3 +35,12 @@ resource "akamai_dns_record" "hydrolixOrigin" {
   target     = [ data.external.hydrolixOrigin.result.hostname ]
   depends_on = [ data.external.hydrolixOrigin ]
 }
+
+resource "akamai_dns_record" "probeStorageOrigin" {
+  zone       = var.settings.general.domain
+  name       = local.probeStorageOriginHostname
+  recordtype = "A"
+  ttl        = 30
+  target     = [ linode_instance.probeStorage.ip_address ]
+  depends_on = [ linode_instance.probeStorage ]
+}

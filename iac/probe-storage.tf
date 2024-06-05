@@ -1,3 +1,8 @@
+# Definition of required local variables.
+locals {
+  probeStorageOriginHostname = "origin-${var.settings.probes.prefix}-${var.settings.probes.storage.prefix}.${var.settings.general.domain}"
+}
+
 # Definition of the probes storage instance.
 resource "linode_instance" "probeStorage" {
   label           = "${var.settings.probes.prefix}-${var.settings.probes.storage.prefix}"
