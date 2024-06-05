@@ -1,3 +1,12 @@
+locals {
+  probesSourceConfigurationDirectory      = "../etc/probes"
+  probesSourceScriptsDirectory            = "../bin/probes"
+  probesDestinationWorkingDirectory       = "/opt/probe"
+  probesDestinationScriptsDirectory       = "${local.probesDestinationWorkingDirectory}/bin"
+  probesDestinationConfigurationDirectory = "${local.probesDestinationWorkingDirectory}/etc"
+  probesDestinationLogsDirectory          = "${local.probesDestinationWorkingDirectory}/logs"
+}
+
 # Definition of the probes instances.
 resource "linode_instance" "probes" {
   for_each        = {for test in var.settings.probes.tests : test.id => test}
@@ -29,9 +38,9 @@ resource "linode_instance" "probes" {
       "curl https://get.docker.com | bash",
       "systemctl enable docker",
       "docker pull sitespeedio/sitespeed.io",
-      "mkdir -p ${var.settings.probes.workDirectory}/${var.settings.probes.scriptsDirectory}",
-      "mkdir -p ${var.settings.probes.workDirectory}/${var.settings.probes.configurationsDirectory}",
-      "mkdir -p ${var.settings.probes.workDirectory}/${var.settings.probes.logsDirectory}"
+      "mkdir -p ${local.probesDestinationScriptsDirectory}",
+      "mkdir -p ${local.probesDestinationConfigurationDirectory}",
+      "mkdir -p ${local.probesDestinationLogsDirectory}"
     ]
   }
 
@@ -44,8 +53,8 @@ resource "linode_instance" "probes" {
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
     }
 
-    source      = "${var.settings.probes.prefix}-${each.value.region}-${each.key}.job"
-    destination = "${var.settings.probes.workDirectory}/${var.settings.probes.configurationsDirectory}/${var.settings.probes.prefix}.job"
+    source      = "${abspath(pathexpand(local.probesSourceConfigurationDirectory))}/${var.settings.probes.prefix}-${each.value.region}-${each.key}.job"
+    destination = "${local.probesDestinationConfigurationDirectory}/${var.settings.probes.prefix}.job"
   }
 
   # Copies the job script.
@@ -57,8 +66,8 @@ resource "linode_instance" "probes" {
       private_key = chomp(file(pathexpand(var.settings.probes.sshPrivateKeyFilename)))
     }
 
-    source      = "${var.settings.probes.prefix}-${each.value.region}-${each.key}.sh"
-    destination = "${var.settings.probes.workDirectory}/${var.settings.probes.scriptsDirectory}/${var.settings.probes.prefix}.sh"
+    source      = "${abspath(pathexpand(local.probesSourceScriptsDirectory))}/${var.settings.probes.prefix}-${each.value.region}-${each.key}.sh"
+    destination = "${local.probesDestinationScriptsDirectory}/${var.settings.probes.prefix}.sh"
   }
 
   # Gives the execution permissions.
@@ -72,8 +81,8 @@ resource "linode_instance" "probes" {
     }
 
     inline = [
-      "chmod +x ${var.settings.probes.workDirectory}/${var.settings.probes.scriptsDirectory}/*.sh",
-      "crontab ${var.settings.probes.workDirectory}/${var.settings.probes.configurationsDirectory}/${var.settings.probes.prefix}.job"
+      "chmod +x ${local.probesDestinationScriptsDirectory}/*.sh",
+      "crontab ${local.probesDestinationConfigurationDirectory}/${var.settings.probes.prefix}.job"
     ]
   }
 
