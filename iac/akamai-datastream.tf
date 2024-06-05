@@ -16,12 +16,13 @@ data "akamai_property" "hydrolix" {
 
 # Definition of the Akamai DataStream 2 configuration.
 resource "akamai_datastream" "hydrolix" {
-  contract_id    = var.settings.akamai.contract
-  group_id       = var.settings.akamai.group
-  stream_name    = var.settings.akamai.datastream.prefix
-  dataset_fields = [ for dataset_field in data.akamai_datastream_dataset_fields.default.dataset_fields : dataset_field.dataset_field_id ]
-  properties     = local.datastreamProperties
-  active         = true
+  contract_id         = var.settings.akamai.contract
+  group_id            = var.settings.akamai.group
+  stream_name         = var.settings.akamai.datastream.prefix
+  dataset_fields      = [ for dataset_field in data.akamai_datastream_dataset_fields.default.dataset_fields : dataset_field.dataset_field_id ]
+  properties          = local.datastreamProperties
+  notification_emails = [ var.settings.general.email ]
+  active              = true
 
   delivery_configuration {
     format = "JSON"
