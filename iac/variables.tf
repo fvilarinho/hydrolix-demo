@@ -24,8 +24,8 @@ variable "settings" {
         city             = "<city>"
         region           = "<region>"
         country          = "<country>"
-        keyFilename      = "cert.key"
-        pemFilename      = "cert.pem"
+        keyFilename      = "../etc/tls/cert.key"
+        pemFilename      = "../etc/tls/cert.pem"
         validityHours    = 86400
       }
     }
@@ -35,26 +35,38 @@ variable "settings" {
       group    = "<group>"
 
       property = {
-        name      = "hydrolix-demo"
-        product   = "<product>"
-        ipVersion = "<ipVersion>"
+        name          = "hydrolix-demo"
+        product       = "<product>"
+        ipVersion     = "<ipVersion>"
+        rulesFilename = "../etc/akamai/property/rules/main.json"
+      }
+
+      datastream = {
+        prefix       = "hydrolix-demo"
+        pushInterval = 30
+
+        properties = [
+          "<propertyName>"
+        ]
       }
     }
 
     hydrolix = {
-      prefix                = "hydrolix-demo"
-      tags                  = [ "hydrolix", "observability" ]
-      namespace             = "hydrolix"
-      version               = "<version>"
-      region                = "<region>"
-      nodeType              = "<nodeType>"
-      defaultNodeCount      = 6
-      minNodeCount          = 4
-      maxNodeCount          = 10
-      configurationFilename = ".kubeconfig"
-      operatorFilename      = "operator.yaml"
-      manifestFilename      = "manifest.yaml"
-      deployScriptFilename  = "deployHydrolix.sh"
+      prefix             = "hydrolix-demo"
+      tags               = [ "hydrolix", "observability" ]
+      namespace          = "hydrolix"
+      version            = "<version>"
+      region             = "<region>"
+      nodeType           = "<nodeType>"
+      minNodeCount       = 4
+      maxNodeCount       = 10
+      kubeconfigFilename = "../etc/hydrolix/.kubeconfig"
+      operatorFilename   = "../etc/hydrolix/operator.yml"
+      manifestFilename   = "../etc/hydrolix/manifest.yml"
+      projectFilename    = "../etc/hydrolix/project.json"
+      tableFilename      = "../etc/hydrolix/table.json"
+      transformFilename  = "../etc/hydrolix/transform.json"
+      password           = "<password>"
     }
 
     grafana = {
@@ -62,25 +74,20 @@ variable "settings" {
       tags                  = [ "dataviz", "observability" ]
       region                = "<region>"
       nodeType              = "<nodeType>"
-      nodeImage             = "linode/debian11"
+      nodeImage             = "<nodeImage>"
       sshPrivateKeyFilename = "~/.ssh/id_rsa"
       sshPublicKeyFilename  = "~/.ssh/id_rsa.pub"
       defaultPassword       = "<defaultPassword>"
-      configurationFilename = "grafana.ini"
     }
 
     probes = {
-      prefix                  = "probe"
-      tags                    = [ "probes", "observability" ]
-      nodeType                = "<nodeType>"
-      nodeImage               = "<nodeImage>"
-      sshPrivateKeyFilename   = "~/.ssh/id_rsa"
-      sshPublicKeyFilename    = "~/.ssh/id_rsa.pub"
-      defaultPassword         = "<defaultPassword>"
-      workDirectory           = "/opt/probe"
-      scriptsDirectory        = "bin"
-      configurationsDirectory = "etc"
-      logsDirectory           = "logs"
+      prefix                = "probe"
+      tags                  = [ "probes", "observability" ]
+      nodeType              = "<nodeType>"
+      nodeImage             = "<nodeImage>"
+      sshPrivateKeyFilename = "~/.ssh/id_rsa"
+      sshPublicKeyFilename  = "~/.ssh/id_rsa.pub"
+      defaultPassword       = "<defaultPassword>"
 
       storage = {
         prefix                = "storage"
