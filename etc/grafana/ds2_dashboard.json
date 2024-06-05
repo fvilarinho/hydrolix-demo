@@ -25,12 +25,12 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 18453,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -38,228 +38,229 @@
         "y": 0
       },
       "id": 26,
-      "panels": [
-        {
-          "datasource": {
-            "type": "grafana-clickhouse-datasource"
-          },
-          "description": "The time in milliseconds from when the edge server is ready to send the first byte of the response to when the last byte reaches the kernel.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "smooth",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 10,
-            "w": 12,
-            "x": 0,
-            "y": 1
-          },
-          "id": 20,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean"
-              ],
-              "displayMode": "table",
-              "placement": "right",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "grafana-clickhouse-datasource"
-              },
-              "editorType": "sql",
-              "format": 1,
-              "meta": {
-                "builderOptions": {
-                  "columns": [],
-                  "database": "",
-                  "limit": 100,
-                  "mode": "list",
-                  "queryType": "table",
-                  "table": ""
-                }
-              },
-              "pluginVersion": "4.0.3",
-              "queryType": "table",
-              "rawSql": "SELECT $__timeInterval(reqTimeSec) as time,\nquantile(0.25)(transferTimeMSec) as 25th,\nquantile(0.5)(transferTimeMSec) as 50th,\nquantile(0.75)(transferTimeMSec) as 75th,\nquantile(0.9)(transferTimeMSec) as 90th,\nquantile(0.95)(transferTimeMSec) as 95th,\nquantile(0.99)(transferTimeMSec) as 99th\nFROM ${table}\nWHERE $__timeFilter(reqTimeSec)\nAND $__conditionalAll( statusCode ${AND_statusCode} (${statusCode:sqlstring}), $statusCode)\nAND $__conditionalAll( reqHost ${AND_reqHost} (${reqHost:sqlstring}), $reqHost)\nAND $__conditionalAll( cacheStatus ${AND_cacheStatus} (${cacheStatus:sqlstring}), $cacheStatus)\nAND $__conditionalAll( reqMethod ${AND_reqMethod} (${reqMethod:sqlstring}), $reqMethod)\nAND $__conditionalAll( rspContentType ${AND_rspContentType} (${rspContentType:sqlstring}), $rspContentType)\nAND $__conditionalAll( errorCode ${AND_errorCode} (${errorCode:sqlstring}), $errorCode)\nAND $__conditionalAll( transferTimeMSec >= ${transferTimeMSec_percentile}, $transferTimeMSec_percentile)\nAND $__conditionalAll(${metric_name} ${metric_filter} ${metric_value}, $metric_filter)\nAND $__conditionalAll(reqPath ${AND_reqPath} (${reqPath:sqlstring}), $reqPath)\nAND $__conditionalAll(cliIP ${AND_cliIP} (${cliIP:sqlstring}), $cliIP)\nAND $__conditionalAll(country ${AND_country} (${country:sqlstring}), $country)\nGROUP BY time ORDER BY time\nSETTINGS hdx_query_max_execution_time=60",
-              "refId": "A"
-            }
-          ],
-          "title": "Akamai Time",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "grafana-clickhouse-datasource"
-          },
-          "description": "The time in milliseconds from when the edge server receives the last byte of the request to when it sends the first bytes of the response.\n",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "smooth",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 10,
-            "w": 12,
-            "x": 12,
-            "y": 1
-          },
-          "id": 21,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean"
-              ],
-              "displayMode": "table",
-              "placement": "right",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "grafana-clickhouse-datasource"
-              },
-              "editorType": "sql",
-              "format": 1,
-              "meta": {
-                "builderOptions": {
-                  "columns": [],
-                  "database": "",
-                  "limit": 100,
-                  "mode": "list",
-                  "queryType": "table",
-                  "table": ""
-                }
-              },
-              "pluginVersion": "4.0.3",
-              "queryType": "table",
-              "rawSql": "SELECT $__timeInterval(reqTimeSec) as time,\nquantile(0.25)(turnAroundTimeMSec) as 25th,\nquantile(0.5)(turnAroundTimeMSec) as 50th,\nquantile(0.75)(turnAroundTimeMSec) as 75th,\nquantile(0.9)(turnAroundTimeMSec) as 90th,\nquantile(0.95)(turnAroundTimeMSec) as 95th,\nquantile(0.99)(turnAroundTimeMSec) as 99th\nFROM ${table}\nWHERE $__timeFilter(reqTimeSec)\nAND $__conditionalAll( statusCode ${AND_statusCode} (${statusCode:sqlstring}), $statusCode)\nAND $__conditionalAll( reqHost ${AND_reqHost} (${reqHost:sqlstring}), $reqHost)\nAND $__conditionalAll( cacheStatus ${AND_cacheStatus} (${cacheStatus:sqlstring}), $cacheStatus)\nAND $__conditionalAll( reqMethod ${AND_reqMethod} (${reqMethod:sqlstring}), $reqMethod)\nAND $__conditionalAll( rspContentType ${AND_rspContentType} (${rspContentType:sqlstring}), $rspContentType)\nAND $__conditionalAll( errorCode ${AND_errorCode} (${errorCode:sqlstring}), $errorCode)\nAND $__conditionalAll( transferTimeMSec >= ${transferTimeMSec_percentile}, $transferTimeMSec_percentile)\nAND $__conditionalAll(${metric_name} ${metric_filter} ${metric_value}, $metric_filter)\nAND $__conditionalAll(reqPath ${AND_reqPath} (${reqPath:sqlstring}), $reqPath)\nAND $__conditionalAll(cliIP ${AND_cliIP} (${cliIP:sqlstring}), $cliIP)\nAND $__conditionalAll(country ${AND_country} (${country:sqlstring}), $country)\nGROUP BY time ORDER BY time\nSETTINGS hdx_query_max_execution_time=60",
-              "refId": "A"
-            }
-          ],
-          "title": "Application Time",
-          "type": "timeseries"
-        }
-      ],
+      "panels": [],
       "title": "Performance",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource"
+      },
+      "description": "The time in milliseconds from when the edge server is ready to send the first byte of the response to when the last byte reaches the kernel.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "meta": {
+            "builderOptions": {
+              "columns": [],
+              "database": "",
+              "limit": 100,
+              "mode": "list",
+              "queryType": "table",
+              "table": ""
+            }
+          },
+          "pluginVersion": "4.0.3",
+          "queryType": "table",
+          "rawSql": "SELECT $__timeInterval(reqTimeSec) as time,\nquantile(0.25)(transferTimeMSec) as 25th,\nquantile(0.5)(transferTimeMSec) as 50th,\nquantile(0.75)(transferTimeMSec) as 75th,\nquantile(0.9)(transferTimeMSec) as 90th,\nquantile(0.95)(transferTimeMSec) as 95th,\nquantile(0.99)(transferTimeMSec) as 99th\nFROM ${table}\nWHERE $__timeFilter(reqTimeSec)\nAND $__conditionalAll( statusCode ${AND_statusCode} (${statusCode:sqlstring}), $statusCode)\nAND $__conditionalAll( reqHost ${AND_reqHost} (${reqHost:sqlstring}), $reqHost)\nAND $__conditionalAll( cacheStatus ${AND_cacheStatus} (${cacheStatus:sqlstring}), $cacheStatus)\nAND $__conditionalAll( reqMethod ${AND_reqMethod} (${reqMethod:sqlstring}), $reqMethod)\nAND $__conditionalAll( rspContentType ${AND_rspContentType} (${rspContentType:sqlstring}), $rspContentType)\nAND $__conditionalAll( errorCode ${AND_errorCode} (${errorCode:sqlstring}), $errorCode)\nAND $__conditionalAll( transferTimeMSec >= ${transferTimeMSec_percentile}, $transferTimeMSec_percentile)\nAND $__conditionalAll(${metric_name} ${metric_filter} ${metric_value}, $metric_filter)\nAND $__conditionalAll(reqPath ${AND_reqPath} (${reqPath:sqlstring}), $reqPath)\nAND $__conditionalAll(cliIP ${AND_cliIP} (${cliIP:sqlstring}), $cliIP)\nAND $__conditionalAll(country ${AND_country} (${country:sqlstring}), $country)\nGROUP BY time ORDER BY time\nSETTINGS hdx_query_max_execution_time=60",
+          "refId": "A"
+        }
+      ],
+      "title": "Akamai Time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource"
+      },
+      "description": "The time in milliseconds from when the edge server receives the last byte of the request to when it sends the first bytes of the response.\n",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 21,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "meta": {
+            "builderOptions": {
+              "columns": [],
+              "database": "",
+              "limit": 100,
+              "mode": "list",
+              "queryType": "table",
+              "table": ""
+            }
+          },
+          "pluginVersion": "4.0.3",
+          "queryType": "table",
+          "rawSql": "SELECT $__timeInterval(reqTimeSec) as time,\nquantile(0.25)(turnAroundTimeMSec) as 25th,\nquantile(0.5)(turnAroundTimeMSec) as 50th,\nquantile(0.75)(turnAroundTimeMSec) as 75th,\nquantile(0.9)(turnAroundTimeMSec) as 90th,\nquantile(0.95)(turnAroundTimeMSec) as 95th,\nquantile(0.99)(turnAroundTimeMSec) as 99th\nFROM ${table}\nWHERE $__timeFilter(reqTimeSec)\nAND $__conditionalAll( statusCode ${AND_statusCode} (${statusCode:sqlstring}), $statusCode)\nAND $__conditionalAll( reqHost ${AND_reqHost} (${reqHost:sqlstring}), $reqHost)\nAND $__conditionalAll( cacheStatus ${AND_cacheStatus} (${cacheStatus:sqlstring}), $cacheStatus)\nAND $__conditionalAll( reqMethod ${AND_reqMethod} (${reqMethod:sqlstring}), $reqMethod)\nAND $__conditionalAll( rspContentType ${AND_rspContentType} (${rspContentType:sqlstring}), $rspContentType)\nAND $__conditionalAll( errorCode ${AND_errorCode} (${errorCode:sqlstring}), $errorCode)\nAND $__conditionalAll( transferTimeMSec >= ${transferTimeMSec_percentile}, $transferTimeMSec_percentile)\nAND $__conditionalAll(${metric_name} ${metric_filter} ${metric_value}, $metric_filter)\nAND $__conditionalAll(reqPath ${AND_reqPath} (${reqPath:sqlstring}), $reqPath)\nAND $__conditionalAll(cliIP ${AND_cliIP} (${cliIP:sqlstring}), $cliIP)\nAND $__conditionalAll(country ${AND_country} (${country:sqlstring}), $country)\nGROUP BY time ORDER BY time\nSETTINGS hdx_query_max_execution_time=60",
+          "refId": "A"
+        }
+      ],
+      "title": "Application Time",
+      "type": "timeseries"
     },
     {
       "collapsed": false,
@@ -267,7 +268,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 1
+        "y": 11
       },
       "id": 23,
       "panels": [],
@@ -276,7 +277,8 @@
     },
     {
       "datasource": {
-        "type": "grafana-clickhouse-datasource"
+        "type": "grafana-clickhouse-datasource",
+        "uid": "adnuo2ama3280a"
       },
       "description": "Number of request group by Response Code",
       "fieldConfig": {
@@ -337,7 +339,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 2
+        "y": 12
       },
       "id": 3,
       "options": {
@@ -352,6 +354,7 @@
           "sortDesc": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -375,7 +378,7 @@
               "table": "logs"
             }
           },
-          "pluginVersion": "4.0.3",
+          "pluginVersion": "4.0.8",
           "queryType": "table",
           "rawSql": "SELECT toString(statusCode) as HTTP_Status_Code, $__timeInterval(reqTimeSec) as time, count(*) as code\nFROM ${table}\nWHERE $__timeFilter(reqTimeSec)\nAND $__conditionalAll( statusCode ${AND_statusCode} (${statusCode:sqlstring}), $statusCode)\nAND $__conditionalAll( reqHost ${AND_reqHost} (${reqHost:sqlstring}), $reqHost)\nAND $__conditionalAll( cacheStatus ${AND_cacheStatus} (${cacheStatus:sqlstring}), $cacheStatus)\nAND $__conditionalAll( reqMethod ${AND_reqMethod} (${reqMethod:sqlstring}), $reqMethod)\nAND $__conditionalAll( rspContentType ${AND_rspContentType} (${rspContentType:sqlstring}), $rspContentType)\nAND $__conditionalAll( errorCode ${AND_errorCode} (${errorCode:sqlstring}), $errorCode)\nAND $__conditionalAll( transferTimeMSec >= ${transferTimeMSec_percentile}, $transferTimeMSec_percentile)\nAND $__conditionalAll(${metric_name} ${metric_filter} ${metric_value}, $metric_filter)\nAND $__conditionalAll(reqPath ${AND_reqPath} (${reqPath:sqlstring}), $reqPath)\nAND $__conditionalAll(cliIP ${AND_cliIP} (${cliIP:sqlstring}), $cliIP)\nAND $__conditionalAll(country ${AND_country} (${country:sqlstring}), $country)\nGROUP BY HTTP_Status_Code, time ORDER BY time\nSETTINGS hdx_query_max_execution_time=60",
           "refId": "A"
@@ -455,7 +458,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 2
+        "y": 12
       },
       "id": 29,
       "options": {
@@ -470,6 +473,7 @@
           "sortDesc": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -583,7 +587,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 2
+        "y": 12
       },
       "id": 17,
       "options": {
@@ -596,6 +600,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -681,7 +686,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 11
+        "y": 21
       },
       "id": 8,
       "options": {
@@ -703,6 +708,7 @@
           "values": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -807,7 +813,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 11
+        "y": 21
       },
       "id": 2,
       "options": {
@@ -822,6 +828,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -927,7 +934,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 11
+        "y": 21
       },
       "id": 18,
       "options": {
@@ -942,6 +949,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -1054,7 +1062,7 @@
         "h": 9,
         "w": 6,
         "x": 0,
-        "y": 20
+        "y": 30
       },
       "id": 27,
       "options": {
@@ -1070,7 +1078,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.1",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -1177,7 +1185,7 @@
         "h": 9,
         "w": 6,
         "x": 6,
-        "y": 20
+        "y": 30
       },
       "id": 5,
       "options": {
@@ -1193,7 +1201,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.1",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -1288,7 +1296,7 @@
         "h": 9,
         "w": 6,
         "x": 12,
-        "y": 20
+        "y": 30
       },
       "id": 22,
       "options": {
@@ -1304,7 +1312,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.1",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -1399,7 +1407,7 @@
         "h": 9,
         "w": 6,
         "x": 18,
-        "y": 20
+        "y": 30
       },
       "id": 6,
       "options": {
@@ -1415,7 +1423,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.1",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -1522,7 +1530,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 29
+        "y": 39
       },
       "id": 7,
       "options": {
@@ -1538,7 +1546,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.1",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -1645,7 +1653,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 29
+        "y": 39
       },
       "id": 24,
       "options": {
@@ -1661,7 +1669,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.1",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -1750,7 +1758,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 29
+        "y": 39
       },
       "id": 25,
       "options": {
@@ -1766,7 +1774,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.1",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -2163,7 +2171,8 @@
           ]
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource"
+          "type": "grafana-clickhouse-datasource",
+          "uid": "adnuo2ama3280a"
         },
         "definition": "SELECT arrayJoin(topK(50)(reqHost)) FROM ${table} WHERE $__timeFilter(reqTimeSec)",
         "hide": 0,
@@ -2219,7 +2228,8 @@
           ]
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource"
+          "type": "grafana-clickhouse-datasource",
+          "uid": "adnuo2ama3280a"
         },
         "definition": "SELECT arrayJoin(topK(50)(reqMethod)) FROM ${table} WHERE $__timeFilter(reqTimeSec)",
         "hide": 0,
@@ -2275,7 +2285,8 @@
           ]
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource"
+          "type": "grafana-clickhouse-datasource",
+          "uid": "adnuo2ama3280a"
         },
         "definition": "SELECT arrayJoin(topK(50)(rspContentType)) FROM ${table} WHERE $__timeFilter(reqTimeSec)",
         "hide": 0,
@@ -2331,7 +2342,8 @@
           ]
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource"
+          "type": "grafana-clickhouse-datasource",
+          "uid": "adnuo2ama3280a"
         },
         "definition": "SELECT arrayJoin(topK(50)(errorCode)) FROM ${table} WHERE $__timeFilter(reqTimeSec)",
         "hide": 0,
@@ -2533,7 +2545,8 @@
           ]
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource"
+          "type": "grafana-clickhouse-datasource",
+          "uid": "adnuo2ama3280a"
         },
         "definition": "SELECT arrayJoin(topK(50)(country)) FROM ${table} WHERE $__timeFilter(reqTimeSec)",
         "hide": 0,
@@ -2557,7 +2570,8 @@
           "value": ""
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource"
+          "type": "grafana-clickhouse-datasource",
+          "uid": "adnuo2ama3280a"
         },
         "definition": "$__conditionalAll(SELECT quantile(${edge_response_time_percentile})(transferTimeMSec) FROM ${table} WHERE $__timeFilter(reqTimeSec),$edge_response_time_percentile)",
         "hide": 2,
@@ -2579,7 +2593,8 @@
           "value": "$__all"
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource"
+          "type": "grafana-clickhouse-datasource",
+          "uid": "adnuo2ama3280a"
         },
         "definition": "SELECT name\nFROM system.columns\nWHERE database = splitByChar('.', '${table}')[1]\nAND table = splitByChar('.', '${table}')[2]\nAND type IN ('Nullable(UInt8)', 'Nullable(UInt16)', 'Nullable(UInt32)', 'Nullable(UInt64)', 'Nullable(Int8)', 'Nullable(Int16)', 'Nullable(Int32)', 'Nullable(Int64)', 'UInt8', 'UInt16', 'UInt32', 'UInt64', 'Int8', 'Int16', 'Int32', 'Int64', 'Float', 'Nullable(Float)')",
         "hide": 0,
@@ -2673,11 +2688,12 @@
       {
         "current": {
           "selected": false,
-          "text": "demo.`akamai_ds2#.catalog`",
-          "value": "demo.`akamai_ds2#.catalog`"
+          "text": "hydrolix_demo.`ds2#.catalog`",
+          "value": "hydrolix_demo.`ds2#.catalog`"
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource"
+          "type": "grafana-clickhouse-datasource",
+          "uid": "adnuo2ama3280a"
         },
         "definition": "SELECT concat(project,'.`',table,'#.catalog`')\nFROM (SELECT splitByChar('.','${table}')[1] as project, splitByChar('.','${table}')[2] as table)",
         "hide": 2,
@@ -2695,15 +2711,17 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-15m",
     "to": "now-1m"
   },
+  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {
     "hidden": false,
     "nowDelay": "1m"
   },
   "timezone": "",
   "title": "Akamai Observability",
-  "version": 50,
+  "uid": "adnuo7biavi80b",
+  "version": 3,
   "weekStart": ""
 }
