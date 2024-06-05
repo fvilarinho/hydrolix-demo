@@ -8,6 +8,10 @@ locals {
 
 # Checks if all required resources exist. If don't, it will create them.
 resource "null_resource" "hydrolixResources" {
+  triggers = {
+    always_run = timestamp()
+  }
+
   provisioner "local-exec" {
     command = abspath(pathexpand(local.hydrolixResourcesScriptFilename))
     quiet   = true
@@ -21,4 +25,10 @@ resource "null_resource" "hydrolixResources" {
       transformStructureFilename = abspath(pathexpand(var.settings.hydrolix.transformFilename))
     }
   }
+
+  depends_on = [
+    data.external.hydrolixOrigin,
+    akamai_property.hydrolix,
+    akamai_property_activation.staging
+  ]
 }

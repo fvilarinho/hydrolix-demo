@@ -2666,7 +2666,7 @@
       {
         "hide": 2,
         "name": "table",
-        "query": "demo.akamai_ds2",
+        "query": "hydrolix_demo.ds2",
         "skipUrlSync": false,
         "type": "constant"
       },
