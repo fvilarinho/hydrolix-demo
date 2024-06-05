@@ -5,14 +5,14 @@ locals {
 
 # Retrieve the TLS certificate fingerprint used in the pinning.
 data "external" "certificateSha1Fingerprint" {
-  program = [ abspath(pathexpand(local.certificateSha1FingerprintScriptFilename)) ]
-  query   = {
-    CERTIFICATE_PEM_FILENAME = abspath(pathexpand(var.settings.general.certificate.pemFilename))
-  }
+  program = [
+    abspath(pathexpand(local.certificateSha1FingerprintScriptFilename)),
+    abspath(pathexpand(var.settings.general.certificate.pemFilename))
+  ]
 }
 
 # Process the Property rules.
-data "akamai_property_rules_template" "rules" {
+data "akamai_property_rules_template" "hydrolix" {
   template_file = abspath(pathexpand(var.settings.akamai.property.rulesFilename))
 
   # Definition of the Hydrolix origin.
@@ -46,7 +46,7 @@ data "akamai_property_rules_template" "rules" {
   variables {
     name  = "cpCode"
     type  = "number"
-    value = akamai_cp_code.default.id
+    value = akamai_cp_code.hydrolix.id
   }
 
   # Definition of the TLS certificate common name used in the pinning.
@@ -72,13 +72,13 @@ data "akamai_property_rules_template" "rules" {
 
   depends_on = [
     tls_self_signed_cert.default,
-    akamai_cp_code.default,
+    akamai_cp_code.hydrolix,
     data.external.certificateSha1Fingerprint
   ]
 }
 
 # Definition of the Property.
-resource "akamai_property" "default" {
+resource "akamai_property" "hydrolix" {
   name        = var.settings.akamai.property.name
   contract_id = var.settings.akamai.contract
   group_id    = var.settings.akamai.group
@@ -87,34 +87,31 @@ resource "akamai_property" "default" {
   # Definition of the Grafana hostname/edge hostname.
   hostnames {
     cname_from             = local.grafanaHostname
-    cname_to               = akamai_edge_hostname.default.edge_hostname
+    cname_to               = akamai_edge_hostname.hydrolix.edge_hostname
     cert_provisioning_type = "DEFAULT"
   }
 
   # Definition of the Hydrolix hostname/edge hostname.
   hostnames {
     cname_from             = local.hydrolixHostname
-    cname_to               = akamai_edge_hostname.default.edge_hostname
+    cname_to               = akamai_edge_hostname.hydrolix.edge_hostname
     cert_provisioning_type = "DEFAULT"
   }
 
-  rules = data.akamai_property_rules_template.rules.json
+  rules = data.akamai_property_rules_template.hydrolix.json
 
   depends_on = [
-    akamai_edge_hostname.default,
-    data.akamai_property_rules_template.rules
+    akamai_edge_hostname.hydrolix,
+    data.akamai_property_rules_template.hydrolix
   ]
 }
 
 # Activates the Property in staging.
-resource "akamai_property_activation" "default" {
-  property_id                    = akamai_property.default.id
+resource "akamai_property_activation" "staging" {
+  property_id                    = akamai_property.hydrolix.id
   contact                        = [ var.settings.general.email ]
-  version                        = akamai_property.default.latest_version
+  version                        = akamai_property.hydrolix.latest_version
   network                        = "STAGING"
   auto_acknowledge_rule_warnings = true
-  depends_on                     = [
-    akamai_property.default,
-    akamai_dns_record.certificateValidation
-  ]
+  depends_on                     = [ akamai_property.hydrolix ]
 }

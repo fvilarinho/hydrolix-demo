@@ -1,5 +1,5 @@
 # Definition of the Edge Hostname used by the Property.
-resource "akamai_edge_hostname" "default" {
+resource "akamai_edge_hostname" "hydrolix" {
   contract_id   = var.settings.akamai.contract
   group_id      = var.settings.akamai.group
   product_id    = var.settings.akamai.property.product
