@@ -277,8 +277,7 @@
     },
     {
       "datasource": {
-        "type": "grafana-clickhouse-datasource",
-        "uid": "adnuo2ama3280a"
+        "type": "grafana-clickhouse-datasource"
       },
       "description": "Number of request group by Response Code",
       "fieldConfig": {
@@ -2164,8 +2163,7 @@
           ]
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource",
-          "uid": "adnuo2ama3280a"
+          "type": "grafana-clickhouse-datasource"
         },
         "definition": "SELECT arrayJoin(topK(50)(reqHost)) FROM ${table} WHERE $__timeFilter(reqTimeSec)",
         "hide": 0,
@@ -2221,8 +2219,7 @@
           ]
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource",
-          "uid": "adnuo2ama3280a"
+          "type": "grafana-clickhouse-datasource"
         },
         "definition": "SELECT arrayJoin(topK(50)(reqMethod)) FROM ${table} WHERE $__timeFilter(reqTimeSec)",
         "hide": 0,
@@ -2278,8 +2275,7 @@
           ]
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource",
-          "uid": "adnuo2ama3280a"
+          "type": "grafana-clickhouse-datasource"
         },
         "definition": "SELECT arrayJoin(topK(50)(rspContentType)) FROM ${table} WHERE $__timeFilter(reqTimeSec)",
         "hide": 0,
@@ -2335,8 +2331,7 @@
           ]
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource",
-          "uid": "adnuo2ama3280a"
+          "type": "grafana-clickhouse-datasource"
         },
         "definition": "SELECT arrayJoin(topK(50)(errorCode)) FROM ${table} WHERE $__timeFilter(reqTimeSec)",
         "hide": 0,
@@ -2538,8 +2533,7 @@
           ]
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource",
-          "uid": "adnuo2ama3280a"
+          "type": "grafana-clickhouse-datasource"
         },
         "definition": "SELECT arrayJoin(topK(50)(country)) FROM ${table} WHERE $__timeFilter(reqTimeSec)",
         "hide": 0,
@@ -2563,8 +2557,7 @@
           "value": ""
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource",
-          "uid": "adnuo2ama3280a"
+          "type": "grafana-clickhouse-datasource"
         },
         "definition": "$__conditionalAll(SELECT quantile(${edge_response_time_percentile})(transferTimeMSec) FROM ${table} WHERE $__timeFilter(reqTimeSec),$edge_response_time_percentile)",
         "hide": 2,
@@ -2586,8 +2579,7 @@
           "value": "$__all"
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource",
-          "uid": "adnuo2ama3280a"
+          "type": "grafana-clickhouse-datasource"
         },
         "definition": "SELECT name\nFROM system.columns\nWHERE database = splitByChar('.', '${table}')[1]\nAND table = splitByChar('.', '${table}')[2]\nAND type IN ('Nullable(UInt8)', 'Nullable(UInt16)', 'Nullable(UInt32)', 'Nullable(UInt64)', 'Nullable(Int8)', 'Nullable(Int16)', 'Nullable(Int32)', 'Nullable(Int64)', 'UInt8', 'UInt16', 'UInt32', 'UInt64', 'Int8', 'Int16', 'Int32', 'Int64', 'Float', 'Nullable(Float)')",
         "hide": 0,
@@ -2685,8 +2677,7 @@
           "value": "hydrolix_demo.`ds2#.catalog`"
         },
         "datasource": {
-          "type": "grafana-clickhouse-datasource",
-          "uid": "adnuo2ama3280a"
+          "type": "grafana-clickhouse-datasource"
         },
         "definition": "SELECT concat(project,'.`',table,'#.catalog`')\nFROM (SELECT splitByChar('.','${table}')[1] as project, splitByChar('.','${table}')[2] as table)",
         "hide": 2,
