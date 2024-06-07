@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": null,
   "links": [],
   "panels": [
     {
@@ -36,7 +36,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -125,11 +126,12 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.coach.score.median"
@@ -141,7 +143,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -231,11 +234,12 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.coach.performance.score.median"
@@ -247,7 +251,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -337,11 +342,12 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.coach.bestpractice.score.median"
@@ -353,7 +359,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -443,11 +450,12 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.coach.privacy.score.median"
@@ -472,7 +480,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -583,7 +592,6 @@
           "showLegend": true
         },
         "tooltip": {
-          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -591,7 +599,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.browsertime.pageTimings.domainLookupTime.mean"
@@ -602,7 +611,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "description": "",
       "fieldConfig": {
@@ -714,7 +724,6 @@
           "showLegend": true
         },
         "tooltip": {
-          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -722,7 +731,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.browsertime.pageTimings.serverConnectionTime.mean"
@@ -733,7 +743,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -844,7 +855,6 @@
           "showLegend": true
         },
         "tooltip": {
-          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -852,7 +862,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.browsertime.pageTimings.redirectionTime.mean"
@@ -863,7 +874,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -974,7 +986,6 @@
           "showLegend": true
         },
         "tooltip": {
-          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -982,7 +993,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.browsertime.firstPaint.mean"
@@ -993,7 +1005,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -1106,7 +1119,6 @@
           "sortDesc": true
         },
         "tooltip": {
-          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -1114,7 +1126,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.browsertime.pageTimings.domInteractiveTime.mean"
@@ -1125,7 +1138,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -1236,7 +1250,6 @@
           "showLegend": true
         },
         "tooltip": {
-          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -1244,7 +1257,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.browsertime.pageTimings.domContentLoadedTime.mean"
@@ -1255,7 +1269,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -1366,7 +1381,6 @@
           "showLegend": true
         },
         "tooltip": {
-          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -1374,7 +1388,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.browsertime.pageTimings.pageDownloadTime.mean"
@@ -1385,7 +1400,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -1496,7 +1512,6 @@
           "showLegend": true
         },
         "tooltip": {
-          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -1504,7 +1519,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.browsertime.pageTimings.pageLoadTime.mean"
@@ -1515,7 +1531,8 @@
     },
     {
       "datasource": {
-        "type": "graphite"
+        "type": "graphite",
+        "uid": "ddo3m61ayddkwe"
       },
       "fieldConfig": {
         "defaults": {
@@ -1626,7 +1643,6 @@
           "showLegend": true
         },
         "tooltip": {
-          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -1634,7 +1650,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "graphite"
+            "type": "graphite",
+            "uid": "ddo3m61ayddkwe"
           },
           "refId": "A",
           "target": "sitespeed.summary.www_vila_app_br.*.*.browsertime.visualMetrics.VisualComplete99.mean"
@@ -1659,6 +1676,6 @@
   "timezone": "browser",
   "title": "Synthetic Monitoring Overview",
   "uid": "cdif78x9dtkw0a",
-  "version": 3,
+  "version": 19,
   "weekStart": ""
 }
