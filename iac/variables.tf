@@ -38,6 +38,7 @@ variable "settings" {
         name          = "hydrolix-demo"
         product       = "<product>"
         ipVersion     = "<ipVersion>"
+        notes         = "Initial configuration."
         rulesFilename = "../etc/akamai/property/rules/main.json"
       }
 

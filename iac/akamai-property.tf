@@ -79,10 +79,11 @@ data "akamai_property_rules_template" "hydrolix" {
 
 # Definition of the Property.
 resource "akamai_property" "hydrolix" {
-  name        = var.settings.akamai.property.name
-  contract_id = var.settings.akamai.contract
-  group_id    = var.settings.akamai.group
-  product_id  = var.settings.akamai.property.product
+  name          = var.settings.akamai.property.name
+  contract_id   = var.settings.akamai.contract
+  group_id      = var.settings.akamai.group
+  product_id    = var.settings.akamai.property.product
+  version_notes = var.settings.akamai.property.notes
 
   # Definition of the Grafana hostname/edge hostname.
   hostnames {
@@ -111,6 +112,7 @@ resource "akamai_property_activation" "staging" {
   property_id                    = akamai_property.hydrolix.id
   contact                        = [ var.settings.general.email ]
   version                        = akamai_property.hydrolix.latest_version
+  note                           = var.settings.akamai.property.notes
   network                        = "STAGING"
   auto_acknowledge_rule_warnings = true
   depends_on                     = [ akamai_property.hydrolix ]
@@ -121,6 +123,7 @@ resource "akamai_property_activation" "production" {
   property_id                    = akamai_property.hydrolix.id
   contact                        = [ var.settings.general.email ]
   version                        = akamai_property.hydrolix.latest_version
+  note                           = var.settings.akamai.property.notes
   network                        = "PRODUCTION"
   auto_acknowledge_rule_warnings = true
 

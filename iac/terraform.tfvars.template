@@ -34,6 +34,7 @@ settings = {
       name          = "hydrolix-demo"
       product       = "prd_Fresca"
       ipVersion     = "<ipVersion>"
+      notes         = "Initial configuration."
       rulesFilename = "../etc/akamai/property/rules/main.json"
     }
 
