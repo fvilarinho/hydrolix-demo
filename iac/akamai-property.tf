@@ -115,3 +115,19 @@ resource "akamai_property_activation" "staging" {
   auto_acknowledge_rule_warnings = true
   depends_on                     = [ akamai_property.hydrolix ]
 }
+
+# Activates the Property in staging.
+resource "akamai_property_activation" "production" {
+  property_id                    = akamai_property.hydrolix.id
+  contact                        = [ var.settings.general.email ]
+  version                        = akamai_property.hydrolix.latest_version
+  network                        = "PRODUCTION"
+  auto_acknowledge_rule_warnings = true
+
+  compliance_record {
+    noncompliance_reason_no_production_traffic {
+    }
+  }
+
+  depends_on = [ akamai_property.hydrolix ]
+}
