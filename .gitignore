@@ -8,3 +8,4 @@
 /iac/.terraform*
 /iac/terraform.tfstate*
 /iac/terraform.tfvars
+/etc/grafana/.kubeconfig
