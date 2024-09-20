@@ -18,7 +18,7 @@ function applyServices() {
   $KUBECTL_CMD apply -f "../etc/grafana/services.yaml" -n "$NAMESPACE"
 }
 
-function applyStack() {
+function apply() {
   applyStorages
   applyDeployments
   applyServices
@@ -26,7 +26,7 @@ function applyStack() {
 
 function main() {
   createNamespace
-  applyStack
+  apply
 }
 
 main
