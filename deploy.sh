@@ -26,8 +26,8 @@ function checkDependencies() {
     exit 1
   fi
 
-  if [ -z "$OPENSSL_CMD" ]; then
-    echo "openssl is not installed! Please install it first to continue!"
+  if [ -z "$CERTBOT_CMD" ]; then
+    echo "certbot is not installed! Please install it first to continue!"
 
     exit 1
   fi

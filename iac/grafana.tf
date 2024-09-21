@@ -30,18 +30,18 @@ resource "local_sensitive_file" "grafanaKubeconfig" {
 }
 
 resource "null_resource" "applyGrafanaStack" {
-  triggers = {
-    always_run = timestamp()
-  }
-
   provisioner "local-exec" {
     environment = {
       KUBECONFIG = local.grafanaKubeconfigFilename
       NAMESPACE  = var.settings.grafana.namespace
     }
 
+    quiet   = true
     command = local.grafanaApplyStackScript
   }
 
-  depends_on = [ local_sensitive_file.grafanaKubeconfig ]
+  depends_on = [
+    local_sensitive_file.grafanaKubeconfig,
+    null_resource.certificateIssuance
+  ]
 }

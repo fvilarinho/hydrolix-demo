@@ -25,10 +25,9 @@ function prepareToExecute() {
   # Required binaries.
   export TERRAFORM_CMD=$(which terraform)
   export KUBECTL_CMD=$(which kubectl)
-  export HELM_CMD=$(which helm)
   export JQ_CMD=$(which jq)
   export CURL_CMD=$(which curl)
-  export OPENSSL_CMD=$(which openssl)
+  export CERTBOT_CMD=$(which certbot)
 
   # Environment variables.
   export TERRAFORM_PLAN_FILENAME=/tmp/hydrolix-demo.plan

@@ -1,11 +1,10 @@
 /.idea/
-/bin/probes/probe*.sh
-/etc/probes/probe*.job
+/etc/grafana/.kubeconfig
 /etc/hydrolix/.kubeconfig
 /etc/hydrolix/manifest.yml
 /etc/hydrolix/operator.yml
-/etc/tls/cert*
+/etc/tls/*.pem
+/etc/tls/certificateIssuance.conf
 /iac/.terraform*
 /iac/terraform.tfstate*
 /iac/terraform.tfvars
-/etc/grafana/.kubeconfig
