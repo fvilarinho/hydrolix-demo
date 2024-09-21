@@ -2,7 +2,7 @@
 
 # Check the dependencies of this script.
 function checkDependencies() {
-  KUBECONFIG="$1"
+  export KUBECONFIG="$1"
 
   if [ -z "$KUBECONFIG" ]; then
     echo "The kubeconfig filename is not defined! Please define it first to continue!"
@@ -10,7 +10,7 @@ function checkDependencies() {
     exit 1
   fi
 
-  NAMESPACE="$2"
+  export NAMESPACE="$2"
 
   if [ -z "$NAMESPACE" ]; then
     echo "The namespace is not defined! Please define it first to continue!"
@@ -33,14 +33,20 @@ function fetchOrigin() {
                             -o json | $JQ_CMD -r '.status.loadBalancer.ingress[].hostname')
 
     if [ -n "$HOSTNAME" ]; then
-      break
+      IP=$($KUBECTL_CMD get service ingress \
+                        -n "$NAMESPACE" \
+                        -o json | $JQ_CMD -r '.status.loadBalancer.ingress[].ip')
+
+      if [ -n "$IP" ]; then
+        break
+      fi
     fi
 
     sleep 5
   done
 
   # Returns the fetched hostname.
-  echo "{\"hostname\": \"$HOSTNAME\"}"
+  echo "{\"ip\": \"$IP\", \"hostname\": \"$HOSTNAME\"}"
 }
 
 fetchOrigin "$1" "$2"
