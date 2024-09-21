@@ -7,7 +7,7 @@ locals {
 }
 
 resource "linode_token" "certificateIssuance" {
-  label  = "certificateIssuance"
+  label  = "certificate-issuance"
   scopes = "domains:read_write"
 }
 

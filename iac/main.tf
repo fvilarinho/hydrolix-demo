@@ -14,10 +14,3 @@ terraform {
 provider "linode" {
   token = var.credentials.linodeToken
 }
-
-# Retrieve the local machine public IP.
-data "http" "myIp" {
-  url    = "https://ipinfo.io"
-  method = "GET"
-}
-
