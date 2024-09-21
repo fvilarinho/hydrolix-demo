@@ -1,8 +1,6 @@
+# Applies the stack.
 resource "null_resource" "applyGrafanaStack" {
-  triggers = {
-    always_run = timestamp()
-  }
-
+  # Required variables.
   provisioner "local-exec" {
     environment = {
       KUBECONFIG                = local.grafanaKubeconfigFilename
@@ -23,6 +21,7 @@ resource "null_resource" "applyGrafanaStack" {
   ]
 }
 
+# Fetches the origin hostname.
 data "external" "grafanaOrigin" {
   program = [
     local.fetchGrafanaOriginScript,
