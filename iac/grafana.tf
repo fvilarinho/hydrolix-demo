@@ -1,3 +1,4 @@
+# Required variables.
 locals {
   grafanaKubeconfigFilename      = abspath(pathexpand("../etc/grafana/.kubeconfig"))
   grafanaIngressSettingsFilename = abspath(pathexpand("../etc/grafana/ingress.conf"))
