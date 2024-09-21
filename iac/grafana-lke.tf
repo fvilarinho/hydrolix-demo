@@ -5,7 +5,7 @@ resource "linode_lke_cluster" "grafana" {
   tags        = var.settings.grafana.tags
   region      = var.settings.grafana.region
 
-  # Node pools definition.
+  # Node pool definition.
   pool {
     type  = var.settings.grafana.nodeType
 
@@ -21,7 +21,7 @@ resource "linode_lke_cluster" "grafana" {
   }
 }
 
-# Saves the kubeconfig locally.
+# Downloads the kubeconfig file to be able to connect in the LKE cluster after the provisioning.
 resource "local_sensitive_file" "grafanaKubeconfig" {
   filename        = local.grafanaKubeconfigFilename
   content_base64  = linode_lke_cluster.grafana.kubeconfig

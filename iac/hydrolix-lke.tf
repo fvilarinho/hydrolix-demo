@@ -1,11 +1,11 @@
-# Creates a LKE cluster.
+# Creates the LKE cluster.
 resource "linode_lke_cluster" "hydrolix" {
   k8s_version = "1.30"
   label       = var.settings.hydrolix.prefix
   tags        = var.settings.hydrolix.tags
   region      = var.settings.hydrolix.region
 
-  # Pool definition.
+  # Node pool definition.
   pool {
     type = var.settings.hydrolix.nodeType
 
