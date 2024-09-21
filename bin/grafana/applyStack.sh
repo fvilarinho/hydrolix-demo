@@ -1,5 +1,44 @@
 #!/bin/bash
 
+# Check the dependencies of this script.
+function checkDependencies() {
+  if [ -z "$KUBECONFIG" ]; then
+    echo "The kubeconfig filename is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$NAMESPACE" ]; then
+    echo "The namespace is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$INGRESS_SETTINGS_FILENAME" ]; then
+    echo "The ingress settings filename is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$CERTIFICATE_FILENAME" ]; then
+    echo "The certificate filename is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$CERTIFICATE_KEY_FILENAME" ]; then
+    echo "The certificate key filename is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$STACK_FILENAME" ]; then
+    echo "The stack filename is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+}
+
 # Creates the namespace of the stack.
 function createNamespace() {
   $KUBECTL_CMD create namespace "$NAMESPACE" \
@@ -36,6 +75,7 @@ function applyStack() {
 
 # Main function.
 function main() {
+  checkDependencies
   createNamespace
   createSettings
   applyStack
