@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Checks the dependencies to run this script.
+# Checks the dependencies of this script.
 function checkDependencies() {
   if [ -z "$TERRAFORM_CMD" ]; then
     echo "terraform is not installed! Please install it first to continue!"
