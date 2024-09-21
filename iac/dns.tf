@@ -1,3 +1,4 @@
+# Creates the Linode DNS domain.
 resource "linode_domain" "default" {
   domain    = var.settings.general.domain
   type      = "master"
@@ -5,6 +6,7 @@ resource "linode_domain" "default" {
   ttl_sec   = 30
 }
 
+# Creates the Linode DNS domain record for Grafana.
 resource "linode_domain_record" "grafana" {
   domain_id   = linode_domain.default.id
   name        = "${var.settings.grafana.prefix}.${var.settings.general.domain}"
@@ -17,6 +19,7 @@ resource "linode_domain_record" "grafana" {
   ]
 }
 
+# Creates the Linode DNS domain record for Hydrolix.
 resource "linode_domain_record" "hydrolix" {
   domain_id   = linode_domain.default.id
   name        = "${var.settings.hydrolix.prefix}.${var.settings.general.domain}"
