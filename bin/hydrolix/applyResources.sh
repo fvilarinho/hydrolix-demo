@@ -3,37 +3,37 @@
 # Check the dependencies of this script.
 function checkDependencies() {
   if [ -z "$URL" ]; then
-    echo "The hydrolix URL is not defined! Please define it first to continue!"
+    echo "The url is not defined! Please define it first to continue!"
 
     exit 1
   fi
 
   if [ -z "$USERNAME" ]; then
-    echo "The hydrolix credentials is not defined! Please define it first to continue!"
+    echo "The credentials is not defined! Please define it first to continue!"
 
     exit 1
   fi
 
   if [ -z "$PASSWORD" ]; then
-    echo "The hydrolix credentials is not defined! Please define it first to continue!"
+    echo "The credentials is not defined! Please define it first to continue!"
 
     exit 1
   fi
 
   if [ -z "$PROJECT_STRUCTURE_FILENAME" ]; then
-    echo "The hydrolix project filename is not defined! Please define it first to continue!"
+    echo "The project structure filename is not defined! Please define it first to continue!"
 
     exit 1
   fi
 
   if [ -z "$TABLE_STRUCTURE_FILENAME" ]; then
-    echo "The hydrolix table filename is not defined! Please define it first to continue!"
+    echo "The table structure filename is not defined! Please define it first to continue!"
 
     exit 1
   fi
 
   if [ -z "$TRANSFORM_STRUCTURE_FILENAME" ]; then
-    echo "The hydrolix transform filename is not defined! Please define it first to continue!"
+    echo "The transform structure filename is not defined! Please define it first to continue!"
 
     exit 1
   fi

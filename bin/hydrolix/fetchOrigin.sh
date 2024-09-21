@@ -19,7 +19,7 @@ function checkDependencies() {
   fi
 }
 
-# Fetches Hydrolix origin hostname.
+# Fetches the origin hostname.
 function fetchOrigin() {
   checkDependencies "$1" "$2"
 
