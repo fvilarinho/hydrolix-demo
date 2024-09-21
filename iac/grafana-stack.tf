@@ -1,4 +1,4 @@
-# Applies the stack.
+# Applies the stack in the LKE cluster.
 resource "null_resource" "applyGrafanaStack" {
   provisioner "local-exec" {
     # Required variables.
@@ -29,8 +29,5 @@ data "external" "grafanaOrigin" {
     var.settings.grafana.namespace
   ]
 
-  depends_on = [
-    linode_lke_cluster.grafana,
-    null_resource.applyGrafanaStack
-  ]
+  depends_on = [ null_resource.applyGrafanaStack ]
 }

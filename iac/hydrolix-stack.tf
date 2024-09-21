@@ -1,22 +1,17 @@
-# Definition of local variables.
-#locals {
-#  hydrolixOriginScriptFilename  = "../bin/hydrolix/fetchOrigin.sh"
-#}
-
-# Downloads the Hydrolix operator content.
+# Downloads the operator content.
 data "http" "hydrolixOperator" {
   url    = local.hydrolixOperatorUrl
   method = "GET"
 }
 
-# Saves the Hydrolix operator file.
+# Saves the operator file locally.
 resource "local_sensitive_file" "hydrolixOperator" {
   filename   = local.hydrolixOperatorFilename
   content    = data.http.hydrolixOperator.response_body
   depends_on = [ data.http.hydrolixOperator ]
 }
 
-# Saves the Hydrolix stack file.
+# Saves the stack file locally.
 resource "local_sensitive_file" "hydrolixStack" {
   filename = local.hydrolixStackFilename
   content  = <<EOT
@@ -51,8 +46,10 @@ EOT
   ]
 }
 
+# Applies the stack in the LKE cluster.
 resource "null_resource" "applyHydrolixStack" {
   provisioner "local-exec" {
+    # Required variables.
     environment = {
       KUBECONFIG               = local.hydrolixKubeconfigFilename
       NAMESPACE                = var.settings.hydrolix.namespace
@@ -75,16 +72,13 @@ resource "null_resource" "applyHydrolixStack" {
   ]
 }
 
-# Fetches the Hydrolix origin.
+# Fetches the origin hostname.
 data "external" "hydrolixOrigin" {
   program = [
-    abspath(pathexpand(local.fetchHydrolixOriginScript)),
+    local.fetchHydrolixOriginScript,
     local.hydrolixKubeconfigFilename,
     var.settings.hydrolix.namespace
   ]
 
-  depends_on = [
-    local_sensitive_file.hydrolixKubeconfig,
-    null_resource.applyHydrolixStack
-  ]
+  depends_on = [ null_resource.applyHydrolixStack ]
 }
