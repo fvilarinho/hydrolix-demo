@@ -1,13 +1,31 @@
 #!/bin/bash
 
+# Check the dependencies of this script.
+function checkDependencies() {
+  KUBECONFIG="$1"
+
+  if [ -z "$KUBECONFIG" ]; then
+    echo "The kubeconfig filename is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+
+  NAMESPACE="$2"
+
+  if [ -z "$NAMESPACE" ]; then
+    echo "The namespace is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+}
+
 # Fetches Hydrolix origin hostname.
 function fetchOrigin() {
-  export KUBECONFIG="$1"
-  export NAMESPACE="$2"
+  checkDependencies "$1" "$2"
 
   HOSTNAME=
 
-  # Waits until the LKE cluster load balancer is ready.
+  # Waits until LKE cluster load balancer is ready.
   while true; do
     # Fetches the LKE cluster load balancer hostname.
     HOSTNAME=$($KUBECTL_CMD get service traefik \

@@ -1,7 +1,46 @@
 #!/bin/bash
 
+# Check the dependencies of this script.
+function checkDependencies() {
+  if [ -z "$URL" ]; then
+    echo "The hydrolix URL is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$USERNAME" ]; then
+    echo "The hydrolix credentials is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$PASSWORD" ]; then
+    echo "The hydrolix credentials is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$PROJECT_STRUCTURE_FILENAME" ]; then
+    echo "The hydrolix project filename is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$TABLE_STRUCTURE_FILENAME" ]; then
+    echo "The hydrolix table filename is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$TRANSFORM_STRUCTURE_FILENAME" ]; then
+    echo "The hydrolix transform filename is not defined! Please define it first to continue!"
+
+    exit 1
+  fi
+}
+
 # Checks if the required resources (project, table & transform) exist otherwise it will create them.
-function checkOrCreateResources() {
+function applyResources() {
   # Fetches the access token.
   echo "Authenticating in Hydrolix platform..."
 
@@ -109,4 +148,10 @@ function checkOrCreateResources() {
   echo "Hydrolix resources were validated successfully!"
 }
 
-checkOrCreateResources
+# Main function.
+function main() {
+  checkDependencies
+  applyResources
+}
+
+main
