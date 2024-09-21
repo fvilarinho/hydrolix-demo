@@ -1,4 +1,4 @@
 {
   "name": "ds2",
-  "description": "Akamai DataStream 2 table used to store the logs."
+  "description": "Table used to store Akamai Datastream 2 logs."
 }
