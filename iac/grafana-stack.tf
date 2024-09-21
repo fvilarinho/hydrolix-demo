@@ -15,10 +15,7 @@ resource "null_resource" "applyGrafanaStack" {
     command = local.grafanaApplyStackScript
   }
 
-  depends_on = [
-    local_sensitive_file.grafanaKubeconfig,
-    null_resource.certificateIssuance
-  ]
+  depends_on = [ local_sensitive_file.grafanaKubeconfig ]
 }
 
 # Fetches the origin hostname.
