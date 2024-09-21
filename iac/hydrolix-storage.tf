@@ -1,10 +1,10 @@
-# Definition of the object storage bucket. This will be the origin hostname.
+# Creates the object storage bucket to storage the data.
 resource "linode_object_storage_bucket" "hydrolix" {
   label  = var.settings.hydrolix.prefix
   region = var.settings.hydrolix.region
 }
 
-# Definition of the object storage access key.
+# Creates the object storage bucket credentials.
 resource "linode_object_storage_key" "hydrolix" {
   label = var.settings.hydrolix.prefix
 
