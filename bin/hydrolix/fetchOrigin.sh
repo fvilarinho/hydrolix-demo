@@ -11,7 +11,7 @@ function fetchOrigin() {
     # Fetches the LKE cluster loadbalancer hostname.
     HOSTNAME=$($KUBECTL_CMD get service traefik \
                             -n "$NAMESPACE" \
-                            -o json | $JQ_CMD -r '.status.loadBalancer.ingress[0].hostname')
+                            -o json | $JQ_CMD -r '.status.loadBalancer.ingress[].hostname')
 
     if [ -n "$HOSTNAME" ]; then
       break

@@ -1,6 +1,8 @@
 locals {
   certificateIssuanceScript              = abspath(pathexpand("../bin/tls/certificateIssuance.sh"))
-  certificateIssuanceCredentialsFilename = abspath(pathexpand("../etc/tls/certificateIssuance.conf"))
+  certificateIssuanceCredentialsFilename = abspath(pathexpand("../etc/tls/certificateIssuance.properties"))
+  certificateFilename                    = abspath(pathexpand("../etc/tls/fullchain.pem"))
+  certificateKeyFilename                 = abspath(pathexpand("../etc/tls/privkey.pem"))
 }
 
 resource "local_sensitive_file" "certificateValidationCredentials" {
@@ -26,13 +28,13 @@ resource "null_resource" "certificateIssuance" {
 }
 
 resource "local_sensitive_file" "certificate" {
-  filename   = "../etc/tls/fullchain.pem"
+  filename   = local.certificateFilename
   content    = file("/etc/letsencrypt/live/${var.settings.general.domain}/fullchain.pem")
   depends_on = [ null_resource.certificateIssuance ]
 }
 
 resource "local_sensitive_file" "certificateKey" {
-  filename   = "../etc/tls/privkey.pem"
+  filename   = local.certificateKeyFilename
   content    = file("/etc/letsencrypt/live/${var.settings.general.domain}/privkey.pem")
   depends_on = [ null_resource.certificateIssuance ]
 }

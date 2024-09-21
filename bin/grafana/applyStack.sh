@@ -7,33 +7,32 @@ function createNamespace() {
 }
 
 function createSettings() {
-  $KUBECTL_CMD create configmap ingress-settings --from-file=../etc/grafana/ingress.conf -n "$NAMESPACE" -o yaml --dry-run=client | $KUBECTL_CMD apply -f -
-  $KUBECTL_CMD create configmap ingress-tls-certificate --from-file=../etc/tls/fullchain.pem -n "$NAMESPACE" -o yaml --dry-run=client | $KUBECTL_CMD apply -f -
-  $KUBECTL_CMD create configmap ingress-tls-certificate-key --from-file=../etc/tls/privkey.pem -n "$NAMESPACE" -o yaml --dry-run=client | $KUBECTL_CMD apply -f -
+  $KUBECTL_CMD create configmap ingress-settings \
+               --from-file="$INGRESS_SETTINGS_FILENAME" \
+               -n "$NAMESPACE" \
+               -o yaml \
+               --dry-run=client | $KUBECTL_CMD apply -f -
+
+  $KUBECTL_CMD create configmap ingress-tls-certificate \
+               --from-file="$CERTIFICATE_FILENAME" \
+               -n "$NAMESPACE" \
+               -o yaml --dry-run=client | $KUBECTL_CMD apply -f -
+
+  $KUBECTL_CMD create configmap ingress-tls-certificate-key \
+               --from-file="$CERTIFICATE_KEY_FILENAME" \
+               -n "$NAMESPACE" \
+               -o yaml \
+               --dry-run=client | $KUBECTL_CMD apply -f -
 }
 
-function applyStorages() {
-  $KUBECTL_CMD apply -f "../etc/grafana/storages.yaml" -n "$NAMESPACE"
-}
-
-function applyDeployments() {
-  $KUBECTL_CMD apply -f "../etc/grafana/deployments.yaml" -n "$NAMESPACE"
-}
-
-function applyServices() {
-  $KUBECTL_CMD apply -f "../etc/grafana/services.yaml" -n "$NAMESPACE"
-}
-
-function apply() {
-  applyStorages
-  applyDeployments
-  applyServices
+function applyStack() {
+  $KUBECTL_CMD apply -f "$STACK_FILENAME" -n "$NAMESPACE"
 }
 
 function main() {
   createNamespace
   createSettings
-  apply
+  applyStack
 }
 
 main

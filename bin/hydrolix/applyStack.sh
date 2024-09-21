@@ -1,24 +1,33 @@
 #!/bin/bash
 
-# Installs the Hydrolix operator and manifest.
-function install() {
+function createNamespace() {
   $KUBECTL_CMD create namespace "$NAMESPACE" \
                -o yaml \
                --dry-run=client | $KUBECTL_CMD apply -f -
+}
 
+function createSettings() {
   $KUBECTL_CMD create secret tls traefik-tls \
                --key="$CERTIFICATE_KEY_FILENAME" \
-               --cert="$CERTIFICATE_PEM_FILENAME" \
+               --cert="$CERTIFICATE_FILENAME" \
                -n "$NAMESPACE" \
                -o yaml \
                --dry-run=client | $KUBECTL_CMD apply -f -
+}
 
+function applyStack() {
   $KUBECTL_CMD apply -f "$OPERATOR_FILENAME"
 
   # Waits until operator gets ready.
   sleep 5
 
-  $KUBECTL_CMD apply -f "$MANIFEST_FILENAME"
+  $KUBECTL_CMD apply -f "$STACK_FILENAME"
 }
 
-install
+function main() {
+  createNamespace
+  createSettings
+  applyStack
+}
+
+main

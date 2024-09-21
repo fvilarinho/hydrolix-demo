@@ -1,25 +1,8 @@
-locals {
-  fetchGrafanaOriginScript = abspath(pathexpand("../bin/grafana/fetchOrigin.sh"))
-}
-
 resource "linode_domain" "default" {
   domain    = var.settings.general.domain
   type      = "master"
   soa_email = var.settings.general.email
   ttl_sec   = 30
-}
-
-data "external" "grafanaOrigin" {
-  program = [
-    local.fetchGrafanaOriginScript,
-    local.grafanaKubeconfigFilename,
-    var.settings.grafana.namespace
-  ]
-
-  depends_on = [
-    linode_lke_cluster.grafana,
-    null_resource.applyGrafanaStack
-  ]
 }
 
 resource "linode_domain_record" "grafana" {
@@ -31,5 +14,17 @@ resource "linode_domain_record" "grafana" {
   depends_on  = [
     linode_domain.default,
     data.external.grafanaOrigin
+  ]
+}
+
+resource "linode_domain_record" "hydrolix" {
+  domain_id   = linode_domain.default.id
+  name        = "${var.settings.hydrolix.prefix}.${var.settings.general.domain}"
+  record_type = "CNAME"
+  target      = data.external.hydrolixOrigin.result.hostname
+  ttl_sec     = 30
+  depends_on  = [
+    linode_domain.default,
+    data.external.hydrolixOrigin
   ]
 }

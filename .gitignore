@@ -1,10 +1,10 @@
 /.idea/
 /etc/grafana/.kubeconfig
 /etc/hydrolix/.kubeconfig
-/etc/hydrolix/manifest.yml
-/etc/hydrolix/operator.yml
+/etc/hydrolix/operator.yaml
+/etc/hydrolix/stack.yaml
 /etc/tls/*.pem
-/etc/tls/certificateIssuance.conf
+/etc/tls/certificateIssuance.properties
 /iac/.terraform*
 /iac/terraform.tfstate*
 /iac/terraform.tfvars

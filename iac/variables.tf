@@ -12,29 +12,22 @@ variable "settings" {
       domain = "<domain>"
     }
 
-#    hydrolix = {
-#      prefix             = "hydrolix-demo"
-#      tags               = [ "hydrolix", "observability" ]
-#      namespace          = "hydrolix"
-#      region             = "<region>"
-#      nodeType           = "<nodeType>"
-#      minNodeCount       = 4
-#      maxNodeCount       = 10
-#      kubeconfigFilename = "../etc/hydrolix/.kubeconfig"
-#      operatorFilename   = "../etc/hydrolix/operator.yml"
-#      manifestFilename   = "../etc/hydrolix/manifest.yml"
-#      projectFilename    = "../etc/hydrolix/project.json"
-#      tableFilename      = "../etc/hydrolix/table.json"
-#      transformFilename  = "../etc/hydrolix/transform.json"
-#      password           = "<password>"
-#    }
+    hydrolix = {
+      namespace    = "hydrolix"
+      prefix       = "hydrolix"
+      tags         = [ "ingest", "observability" ]
+      region       = "<region>"
+      nodeType     = "g6-standard-4"
+      minNodeCount = 4
+      maxNodeCount = 10
+    }
 
     grafana = {
       namespace    = "grafana"
       prefix       = "grafana"
       tags         = [ "dataviz", "observability" ]
       region       = "<region>"
-      nodeType     = "<nodeType>"
+      nodeType     = "g6-standard-2"
       minNodeCount = 1
       maxNodeCount = 3
     }
