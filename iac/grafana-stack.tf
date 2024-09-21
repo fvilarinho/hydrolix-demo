@@ -1,7 +1,7 @@
 # Applies the stack.
 resource "null_resource" "applyGrafanaStack" {
-  # Required variables.
   provisioner "local-exec" {
+    # Required variables.
     environment = {
       KUBECONFIG                = local.grafanaKubeconfigFilename
       NAMESPACE                 = var.settings.grafana.namespace
