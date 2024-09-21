@@ -1,5 +1,6 @@
 /.idea/
 /etc/grafana/.kubeconfig
+/etc/grafana/stack.yaml
 /etc/hydrolix/.kubeconfig
 /etc/hydrolix/operator.yaml
 /etc/hydrolix/stack.yaml

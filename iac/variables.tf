@@ -32,6 +32,7 @@ variable "settings" {
       nodeType     = "g6-standard-2"
       minNodeCount = 1
       maxNodeCount = 3
+      password     = "<password>"
     }
   }
 }

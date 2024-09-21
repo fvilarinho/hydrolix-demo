@@ -6,12 +6,18 @@ locals {
   certificateKeyFilename                 = abspath(pathexpand("../etc/tls/privkey.pem"))
 }
 
+resource "linode_token" "certificateIssuance" {
+  label  = "certificateIssuance"
+  scopes = "domains:read_write"
+}
+
 # Creates the certificate issuance credentials.
 resource "local_sensitive_file" "certificateIssuanceCredentials" {
   filename = local.certificateIssuanceCredentialsFilename
   content  = <<EOT
-dns_linode_key = ${var.credentials.linodeToken}
+dns_linode_key = ${linode_token.certificateIssuance.token}
 EOT
+  depends_on = [ linode_token.certificateIssuance ]
 }
 
 # Issues the certificate using Certbot.
