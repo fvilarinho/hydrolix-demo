@@ -1,3 +1,4 @@
+# Creates the stack file.
 resource "local_sensitive_file" "grafanaStack" {
   filename = local.grafanaStackFilename
   content  = <<EOT
