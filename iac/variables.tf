@@ -1,10 +1,11 @@
+# Provisioning credentials definition.
 variable "credentials" {
   default = {
     linodeToken = "<linodeToken>"
   }
 }
 
-# Settings definition.
+# Provisioning settings definition.
 variable "settings" {
   default = {
     general = {
@@ -20,6 +21,7 @@ variable "settings" {
       nodeType     = "g6-standard-4"
       minNodeCount = 4
       maxNodeCount = 10
+      password     = "<password>"
     }
 
     grafana = {
