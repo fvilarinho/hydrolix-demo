@@ -19,7 +19,7 @@ your build environment.
 ## 3. Requirements
 
 ### To setup
-- [Terraform 1.6.x or later](https://www.terraform.io/)
+- [Terraform 1.5.x](https://www.terraform.io/)
 - [kubectl 1.31.x or later](https://kubernetes.io/docs/reference/kubectl/kubect)
 - [jq 1.7.x or later](https://jqlang.github.io/jq/)
 - [curl 8.10.x or later](https://curl.se/)
@@ -34,6 +34,9 @@ credentials of Akamai Connected Cloud. Please check how to in the Other resource
 ### To deploy / undeploy
 After the credentials and settings were defined, just execute the shell script `deploy.sh` to start the provisioning.
 To deprovison, execute the shell script `undeploy.sh`.
+
+The provisioning state will be stored in Akamai Connected Cloud. To set the storage definition, please edit the file 
+`iac/main.tf` and modify the section backend.
 
 ### To access
 To access the Hydrolix UI, just open your browser and type the URL: `[http|https]://<hydrolix-prefix>.<domain>` and to 
@@ -54,7 +57,7 @@ If you want to customize the stack by yourself, just edit the following files:
 - `iac/dns.tf`: Defines the Linode DNS provisioning.
 - `iac/grafana*.tf`: Defines the Grafana provisioning.
 - `iac/hydrolix*.tf`: Defines the Hydrolix provisioning.
-- `iac/main.tf`: Defines the required provisioning providers.
+- `iac/main.tf`: Defines the required provisioning providers and state management.
 - `iac/variables.tf`: Defines the provisioning variables. There is sensitive data in this file so it's a best practice 
 to use the `terraform.tfvars` file. Please use the file `iac/terraform.tfvars.template` as template.
 
