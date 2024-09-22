@@ -26,6 +26,7 @@ resource "null_resource" "certificateIssuance" {
     # Required variables.
     environment = {
       CERTIFICATE_ISSUANCE_CREDENTIALS_FILENAME = local.certificateIssuanceCredentialsFilename
+      ERTIFICATE_ISSUANCE_PROPAGATION_DELAY     = 300 // in seconds.
       DOMAIN                                    = var.settings.general.domain
       EMAIL                                     = var.settings.general.email
     }
