@@ -48,6 +48,10 @@ EOT
 
 # Applies the stack in the LKE cluster.
 resource "null_resource" "applyHydrolixStack" {
+  triggers = {
+    always_run = timestamp()
+  }
+
   provisioner "local-exec" {
     # Required variables.
     environment = {

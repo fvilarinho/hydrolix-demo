@@ -20,10 +20,7 @@ resource "linode_lke_cluster" "grafana" {
     high_availability = true
   }
 
-  depends_on = [
-    local_sensitive_file.certificate,
-    local_sensitive_file.certificateKey
-  ]
+  depends_on = [ null_resource.certificateIssuance ]
 }
 
 # Downloads the kubeconfig file to be able to connect in the LKE cluster after the provisioning.

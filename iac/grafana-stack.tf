@@ -130,6 +130,10 @@ EOT
 
 # Applies the stack in the LKE cluster.
 resource "null_resource" "applyGrafanaStack" {
+  triggers = {
+    always_run = timestamp()
+  }
+
   provisioner "local-exec" {
     # Required variables.
     environment = {

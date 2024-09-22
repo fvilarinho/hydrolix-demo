@@ -18,6 +18,10 @@ function prepareToExecute() {
   cd iac || exit 1
 }
 
+function cleanUp() {
+  rm -f etc/tls/*.pem
+}
+
 # Destroys the provisioned environment.
 function undeploy() {
   $TERRAFORM_CMD init \
@@ -26,6 +30,8 @@ function undeploy() {
 
   $TERRAFORM_CMD destroy \
                  -auto-approve
+
+  cleanUp
 }
 
 # Main function.

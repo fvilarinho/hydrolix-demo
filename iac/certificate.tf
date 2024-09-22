@@ -22,11 +22,15 @@ EOT
 
 # Issues the certificate using Certbot.
 resource "null_resource" "certificateIssuance" {
+  triggers = {
+    always_run = timestamp()
+  }
+
   provisioner "local-exec" {
     # Required variables.
     environment = {
       CERTIFICATE_ISSUANCE_CREDENTIALS_FILENAME = local.certificateIssuanceCredentialsFilename
-      ERTIFICATE_ISSUANCE_PROPAGATION_DELAY     = 300 // in seconds.
+      CERTIFICATE_ISSUANCE_PROPAGATION_DELAY    = 600 // in seconds.
       DOMAIN                                    = var.settings.general.domain
       EMAIL                                     = var.settings.general.email
     }
@@ -36,18 +40,4 @@ resource "null_resource" "certificateIssuance" {
   }
 
   depends_on = [ local_sensitive_file.certificateIssuanceCredentials ]
-}
-
-# Saves the certificate to be used in the stacks.
-resource "local_sensitive_file" "certificate" {
-  filename   = local.certificateFilename
-  content    = file("/etc/letsencrypt/live/${var.settings.general.domain}/fullchain.pem")
-  depends_on = [ null_resource.certificateIssuance ]
-}
-
-# Saves the certificate key to be used in the stacks.
-resource "local_sensitive_file" "certificateKey" {
-  filename   = local.certificateKeyFilename
-  content    = file("/etc/letsencrypt/live/${var.settings.general.domain}/privkey.pem")
-  depends_on = [ null_resource.certificateIssuance ]
 }
