@@ -12,7 +12,7 @@
       "name": "VAR_TABLE",
       "type": "constant",
       "label": "table",
-      "value": "hydrolix_demo.ds2",
+      "value": "akamai.ds2",
       "description": ""
     }
   ],
