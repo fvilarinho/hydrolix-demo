@@ -1,3 +1,33 @@
+# Creates the ingress settings file.
+resource "local_sensitive_file" "grafanaIngressSettings" {
+  filename = local.grafanaIngressSettingsFilename
+  content  = <<EOT
+server {
+    listen 80;
+    listen 443 ssl;
+    http2 on;
+    ssl_certificate /etc/tls/fullchain.pem;
+    ssl_certificate_key /etc/tls/privkey.pem;
+
+    location / {
+        proxy_pass http://grafana:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_buffer_size 128k;
+        proxy_buffers 4 256k;
+        proxy_busy_buffers_size 256k;
+    }
+
+    location = /404.html {
+        internal;
+    }
+}
+EOT
+}
+
 # Creates the stack file.
 resource "local_sensitive_file" "grafanaStack" {
   filename = local.grafanaStackFilename
@@ -151,6 +181,7 @@ resource "null_resource" "applyGrafanaStack" {
 
   depends_on = [
     local_sensitive_file.grafanaKubeconfig,
+    local_sensitive_file.grafanaIngressSettings,
     local_sensitive_file.grafanaStack
   ]
 }

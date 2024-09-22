@@ -23,7 +23,7 @@ your build environment.
 - [kubectl 1.31.x or later](https://kubernetes.io/docs/reference/kubectl/kubect)
 - [jq 1.7.x or later](https://jqlang.github.io/jq/)
 - [curl 8.x or later](https://curl.se/)
-- [certbot 1.21.x or later with Linode DNS plugins](https://certbot.eff.org/)
+- [certbot 2.x or later with Linode DNS plugins](https://certbot.eff.org/)
 - `Any linux distribution with Kernel 6.x or later` or
 - `MacOS - Catalina or later` or
 - `MS-Windows 10 or later with WSL2`
@@ -35,8 +35,8 @@ credentials of Akamai Connected Cloud. Please check how to in the Other resource
 After the credentials and settings were defined, just execute the shell script `deploy.sh` to start the provisioning.
 To deprovison, execute the shell script `undeploy.sh`.
 
-The provisioning state will be stored in Akamai Connected Cloud. To set the storage definition, please edit the file 
-`iac/main.tf` and modify the section backend.
+The provisioning state will be stored in Akamai Object Storage. To set the storage definition, please edit the file 
+`iac/main.tf` and modify the section backend with your values.
 
 ### To access
 To access the Hydrolix UI, just open your browser and type the URL: `[http|https]://<hydrolix-prefix>.<domain>` and to 
@@ -46,13 +46,13 @@ The
 
 ## 4. Settings
 If you want to customize the stack by yourself, just edit the following files:
-- `etc/grafana/ingress.conf`: Defines the Grafana ingress settings.
+- `etc/grafana/ingress.conf`: Defines the Grafana ingress settings (Created on provisioning).
 - `etc/grafana/resources/*`: Stores the Grafana resources (Dashboards, Datasources, etc.).
-- `etc/grafana/stack.yaml`: Defines the Grafana stack.
-- `etc/hydrolix/operator.yaml`: Defines the Hydrolix operator.
+- `etc/grafana/stack.yaml`: Defines the Grafana stack (Created on provisioning).
+- `etc/hydrolix/operator.yaml`: Defines the Hydrolix operator (Created on provisioning).
 - `etc/hydrolix/resources/*`: Stores the Hydrolix resources (Project, Table and Transformation structures).
-- `etc/hydrolix/stack.yaml`: Defines the Hydrolix stack.
-- `etc/tls/*`: Stores the TLS certificate files and requirements for the issuance.
+- `etc/hydrolix/stack.yaml`: Defines the Hydrolix stack (Created on provisioning).
+- `etc/tls/*`: Stores the TLS certificate files and requirements for the issuance (Created on provisioning).
 - `iac/certificate.tf`: Defines the TLS certificate provisioning using Certbot.
 - `iac/dns.tf`: Defines the Linode DNS provisioning.
 - `iac/grafana*.tf`: Defines the Grafana provisioning.
