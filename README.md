@@ -22,7 +22,7 @@ your build environment.
 - [Terraform 1.5.x](https://www.terraform.io/)
 - [kubectl 1.31.x or later](https://kubernetes.io/docs/reference/kubectl/kubect)
 - [jq 1.7.x or later](https://jqlang.github.io/jq/)
-- [curl 8.10.x or later](https://curl.se/)
+- [curl 8.x or later](https://curl.se/)
 - [certbot 1.21.x or later with Linode DNS plugins](https://certbot.eff.org/)
 - `Any linux distribution with Kernel 6.x or later` or
 - `MacOS - Catalina or later` or
