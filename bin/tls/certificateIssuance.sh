@@ -42,10 +42,10 @@ function issueTheCertificate() {
 
       exit 1
     fi
-
-    cp -f /etc/letsencrypt/live/"$DOMAIN"/fullchain.pem ../etc/tls
-    cp -f /etc/letsencrypt/live/"$DOMAIN"/privkey.pem ../etc/tls
   fi
+
+  cp -f /etc/letsencrypt/live/"$DOMAIN"/fullchain.pem ../etc/tls
+  cp -f /etc/letsencrypt/live/"$DOMAIN"/privkey.pem ../etc/tls
 }
 
 # Main function.
