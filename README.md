@@ -18,7 +18,7 @@ your build environment.
 
 ## 3. Requirements
 
-### To setup
+### To Setup
 - [Terraform 1.5.x](https://www.terraform.io/)
 - [kubectl 1.31.x or later](https://kubernetes.io/docs/reference/kubectl/kubect)
 - [jq 1.7.x or later](https://jqlang.github.io/jq/)
@@ -28,23 +28,24 @@ your build environment.
 - `MacOS - Catalina or later` or
 - `MS-Windows 10 or later with WSL2`
 
-Please check the settings section below to know how to customize the provisioning. You'll also need to define the 
-credentials of Akamai Connected Cloud. Please check how to in the Other resources section at the end of this document.
+Please check the section [Settings and Scripts](#4-settings-and-scripts)  below to know how to customize the 
+provisioning. You'll also need to define the credentials of Akamai Connected Cloud. Please check the section 
+[Other resources](#5-other-resources) at the end of this document to know how to.
 
-### To deploy / undeploy
+### To Deploy / Undeploy
 After the credentials and settings were defined, just execute the shell script `deploy.sh` to start the provisioning.
 To deprovison, execute the shell script `undeploy.sh`.
 
 The provisioning state will be stored in Akamai Object Storage. To set the storage definition, please edit the file 
 `iac/main.tf` and modify the section backend with your values.
 
-### To access
+### To Access
 To access the Hydrolix UI, just open your browser and type the URL: `[http|https]://<hydrolix-prefix>.<domain>` and to 
 access the Grafana UI, just open your browser and type the URL: `[http|https]://<grafana-prefix>.<domain>`.
 
 The 
 
-## 4. Settings
+## 4. Settings and Scripts
 If you want to customize the stack by yourself, just edit the following files:
 - `etc/grafana/ingress.conf`: Defines the Grafana ingress settings (Created on provisioning).
 - `etc/grafana/resources/*`: Stores the Grafana resources (Dashboards, Datasources, etc.).
@@ -63,7 +64,7 @@ to use the `terraform.tfvars` file. Please use the file `iac/terraform.tfvars.te
 
 #### PLEASE DON'T COMMIT ANY CREDENTIALS OR SENSITIVE INFORMATION
 
-## 5. Other resources
+## 5. Other Resources
 - [Akamai Connected Cloud](https://www.linode.com/docs/)
 - [Akamai Techdocs](https://techdocs.akamai.com/)
 - [Hydrolix](https://docs.hydrolix.io/docs/welcome/)
