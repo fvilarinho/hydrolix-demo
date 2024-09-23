@@ -1,3 +1,4 @@
+# Saves the datasource locally to be applied in the provisioning.
 resource "local_sensitive_file" "grafanaDatasource" {
   filename = local.grafanaDatasourceFilename
   content  = <<EOT
