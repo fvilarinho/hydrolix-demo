@@ -23,10 +23,6 @@ EOT
 
 # Issues the certificate using Certbot.
 resource "null_resource" "certificateIssuance" {
-  triggers = {
-    always_run = timestamp()
-  }
-
   provisioner "local-exec" {
     # Required variables.
     environment = {
