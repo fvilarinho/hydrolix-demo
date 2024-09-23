@@ -20,7 +20,7 @@ function checkDependencies() {
     exit 1
   fi
 
-  if [ -z "$DATASOURCE_FILENAME" ]; then
+  if [ -z "$DATASOURCE_FILENAME" ] || [ ! -f "$DATASOURCE_FILENAME" ]; then
     echo "The datasource filename is not defined! Please define it first to continue!"
 
     exit 1

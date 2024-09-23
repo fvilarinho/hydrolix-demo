@@ -20,19 +20,19 @@ function checkDependencies() {
     exit 1
   fi
 
-  if [ -z "$PROJECT_STRUCTURE_FILENAME" ]; then
+  if [ -z "$PROJECT_STRUCTURE_FILENAME" ] || [ ! -f "$PROJECT_STRUCTURE_FILENAME" ]; then
     echo "The project structure filename is not defined! Please define it first to continue!"
 
     exit 1
   fi
 
-  if [ -z "$TABLE_STRUCTURE_FILENAME" ]; then
+  if [ -z "$TABLE_STRUCTURE_FILENAME" ] || [ ! -f "$TABLE_STRUCTURE_FILENAME" ]; then
     echo "The table structure filename is not defined! Please define it first to continue!"
 
     exit 1
   fi
 
-  if [ -z "$TRANSFORM_STRUCTURE_FILENAME" ]; then
+  if [ -z "$TRANSFORM_STRUCTURE_FILENAME" ] || [ ! -f "$TRANSFORM_STRUCTURE_FILENAME" ]; then
     echo "The transform structure filename is not defined! Please define it first to continue!"
 
     exit 1
