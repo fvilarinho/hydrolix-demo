@@ -70,7 +70,8 @@ resource "null_resource" "applyHydrolixStack" {
   depends_on = [
     local_sensitive_file.hydrolixKubeconfig,
     local_sensitive_file.hydrolixOperator,
-    local_sensitive_file.hydrolixStack
+    local_sensitive_file.hydrolixStack,
+    null_resource.certificateIssuance
   ]
 }
 
