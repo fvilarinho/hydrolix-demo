@@ -182,7 +182,8 @@ resource "null_resource" "applyGrafanaStack" {
   depends_on = [
     local_sensitive_file.grafanaKubeconfig,
     local_sensitive_file.grafanaIngressSettings,
-    local_sensitive_file.grafanaStack
+    local_sensitive_file.grafanaStack,
+    null_resource.certificateIssuance
   ]
 }
 
