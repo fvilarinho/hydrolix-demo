@@ -7,6 +7,18 @@ function checkDependencies() {
 
     exit 1
   fi
+
+  if [ -z "$KUBECTL_CMD" ]; then
+    echo "kubectl is not installed! Please install it first to continue!"
+
+    exit 1
+  fi
+
+  if [ -z "$AWS_CLI_CMD" ]; then
+    echo "aws-cli is not installed! Please install it first to continue!"
+
+    exit 1
+  fi
 }
 
 # Prepares the environment to execute this script.
@@ -18,8 +30,13 @@ function prepareToExecute() {
   cd iac || exit 1
 }
 
+# Clean-up.
 function cleanUp() {
-  rm -f etc/tls/*.pem
+  if [ -f "cleanup.sh" ]; then
+    chmod +x cleanUp.sh
+
+    ./cleanup.sh
+  fi
 }
 
 # Destroys the provisioned environment.
@@ -28,10 +45,10 @@ function undeploy() {
                  -upgrade \
                  -migrate-state
 
+  cleanUp
+
   $TERRAFORM_CMD destroy \
                  -auto-approve
-
-  cleanUp
 }
 
 # Main function.
