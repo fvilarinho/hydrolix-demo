@@ -29,7 +29,11 @@ function checkDependencies() {
 
 # Issue the certificate using Certbot. The validation will be in the Linode DNS.
 function issueTheCertificate() {
+  echo "Check if the certificate already exists..."
+
   if [ ! -f "/etc/letsencrypt/live/$DOMAIN/fullchain.pem" ] || [ ! -f "/etc/letsencrypt/live/$DOMAIN/privkey.pem" ]; then
+    echo "Issuing the certificate..."
+
     $CERTBOT_CMD certonly \
                  --dns-linode \
                  --dns-linode-credentials "$CERTIFICATE_ISSUANCE_CREDENTIALS_FILENAME" \
@@ -38,7 +42,7 @@ function issueTheCertificate() {
                  --email "$EMAIL"
 
     if [ ! -f "/etc/letsencrypt/live/$DOMAIN/fullchain.pem" ] || [ ! -f "/etc/letsencrypt/live/$DOMAIN/privkey.pem" ]; then
-      echo "Certbot couldn't issue the certificate! Please check the details in the logs!"
+      echo "Certificate couldn't not be issued! Please check the details in the logs in the system!"
 
       exit 1
     fi
@@ -46,6 +50,8 @@ function issueTheCertificate() {
 
   cp -f /etc/letsencrypt/live/"$DOMAIN"/fullchain.pem ../etc/tls
   cp -f /etc/letsencrypt/live/"$DOMAIN"/privkey.pem ../etc/tls
+
+  echo "The certificate was validated successfully!"
 }
 
 # Main function.
