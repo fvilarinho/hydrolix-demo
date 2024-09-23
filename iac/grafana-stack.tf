@@ -160,10 +160,6 @@ EOT
 
 # Applies the stack in the LKE cluster.
 resource "null_resource" "applyGrafanaStack" {
-  triggers = {
-    always_run = timestamp()
-  }
-
   provisioner "local-exec" {
     # Required variables.
     environment = {
@@ -180,6 +176,7 @@ resource "null_resource" "applyGrafanaStack" {
   }
 
   depends_on = [
+    null_resource.certificateIssuance,
     local_sensitive_file.grafanaKubeconfig,
     local_sensitive_file.grafanaIngressSettings,
     local_sensitive_file.grafanaStack,
@@ -196,4 +193,28 @@ data "external" "grafanaOrigin" {
   ]
 
   depends_on = [ null_resource.applyGrafanaStack ]
+}
+
+# Creates the clean-up script.
+resource "local_file" "grafanaCleanUp" {
+  filename = local.grafanaCleanUpScript
+  content  = <<EOT
+#!/bin/bash
+
+function prepareToExecute() {
+  export KUBECONFIG="${local.grafanaKubeconfigFilename}"
+}
+
+function deleteStack() {
+  $KUBECTL_CMD delete all --all -n "${var.settings.grafana.namespace}"
+  $KUBECTL_CMD delete pvc --all -n "${var.settings.grafana.namespace}"
+}
+
+function main() {
+  prepareToExecute
+  deleteStack
+}
+
+main
+EOT
 }
