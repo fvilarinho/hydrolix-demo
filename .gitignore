@@ -2,7 +2,7 @@
 /etc/grafana/.kubeconfig
 /bin/grafana/cleanUp.sh
 /etc/grafana/ingress.conf
-/etc/grafana/resources/datasource.json
+/etc/grafana/resources/grafana-clickhouse-datasource.json
 /etc/grafana/stack.yaml
 /etc/hydrolix/.kubeconfig
 /bin/hydrolix/cleanUp.sh

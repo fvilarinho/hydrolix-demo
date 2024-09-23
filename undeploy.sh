@@ -32,10 +32,10 @@ function prepareToExecute() {
 
 # Clean-up.
 function cleanUp() {
-  if [ -f "cleanup.sh" ]; then
+  if [ -f "cleanUp.sh" ]; then
     chmod +x cleanUp.sh
 
-    ./cleanup.sh
+    ./cleanUp.sh
   fi
 }
 
