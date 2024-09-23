@@ -28,6 +28,7 @@ function prepareToExecute() {
   export JQ_CMD=$(which jq)
   export CURL_CMD=$(which curl)
   export CERTBOT_CMD=$(which certbot)
+  export AWS_CLI_CMD=$(which aws)
 
   # Environment variables.
   export TERRAFORM_PLAN_FILENAME=/tmp/hydrolix-demo.plan
