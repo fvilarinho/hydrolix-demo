@@ -48,10 +48,6 @@ EOT
 
 # Applies the stack in the LKE cluster.
 resource "null_resource" "applyHydrolixStack" {
-  triggers = {
-    always_run = timestamp()
-  }
-
   provisioner "local-exec" {
     # Required variables.
     environment = {
@@ -68,6 +64,7 @@ resource "null_resource" "applyHydrolixStack" {
   }
 
   depends_on = [
+    null_resource.certificateIssuance,
     local_sensitive_file.hydrolixKubeconfig,
     local_sensitive_file.hydrolixOperator,
     local_sensitive_file.hydrolixStack,
@@ -84,4 +81,33 @@ data "external" "hydrolixOrigin" {
   ]
 
   depends_on = [ null_resource.applyHydrolixStack ]
+}
+
+# Creates the clean-up script.
+resource "local_file" "hydrolixCleanUp" {
+  filename = local.hydrolixCleanUpScript
+  content  = <<EOT
+#!/bin/bash
+
+function prepareToExecute() {
+  export KUBECONFIG="${local.hydrolixKubeconfigFilename}"
+}
+
+function deleteStack() {
+  $KUBECTL_CMD delete all --all -n "${var.settings.hydrolix.namespace}"
+  $KUBECTL_CMD delete pvc --all -n "${var.settings.hydrolix.namespace}"
+}
+
+function deleteStorageFiles() {
+  $AWS_CLI_CMD s3 --endpoint=https://${linode_object_storage_bucket.hydrolix.endpoint} rm s3://${var.settings.hydrolix.prefix} --recursive
+}
+
+function main() {
+  prepareToExecute
+  deleteStack
+  deleteStorageFiles
+}
+
+main
+EOT
 }
