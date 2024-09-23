@@ -2,9 +2,6 @@
   "dashboard": {
       "editable": true,
       "fiscalYearStartMonth": 0,
-      "gnetId": 18453,
-      "graphTooltip": 0,
-      "id": null,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -2627,25 +2624,6 @@
             "query": "",
             "skipUrlSync": false,
             "type": "textbox"
-          },
-          {
-            "hide": 2,
-            "name": "table",
-            "query": "akamai.ds2",
-            "skipUrlSync": false,
-            "type": "constant",
-            "current": {
-              "value": "akamai.ds2",
-              "text": "akamai.ds2",
-              "selected": false
-            },
-            "options": [
-              {
-                "value": "akamai.ds2",
-                "text": "akamai.ds2",
-                "selected": false
-              }
-            ]
           },
           {
             "current": {},
