@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check the dependencies of this script.
+# Checks the dependencies of this script.
 function checkDependencies() {
   export KUBECONFIG="$1"
 

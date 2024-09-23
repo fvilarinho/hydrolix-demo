@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check the dependencies of this script.
+# Checks the dependencies of this script.
 function checkDependencies() {
   if [ -z "$URL" ]; then
     echo "The url is not defined! Please define it first to continue!"
@@ -42,7 +42,7 @@ function checkDependencies() {
 # Checks if the required resources (project, table & transform) exist otherwise it will create them.
 function applyResources() {
   # Fetches the access token.
-  echo "Authenticating in Hydrolix platform..."
+  echo "Authenticating in the platform..."
 
   ACCESS_TOKEN=$($CURL_CMD -s \
                           -H "Accept: application/json" \
@@ -51,13 +51,13 @@ function applyResources() {
                           -d "{\"username\": \"$USERNAME\", \"password\": \"$PASSWORD\"}" | $JQ_CMD -r '.auth_token.access_token')
 
   if [ -z "$ACCESS_TOKEN" ] || [ "$ACCESS_TOKEN" == "null" ]; then
-    echo "Please check the credentials in Hydrolix platform before continue!"
+    echo "Please check the credentials in the platform before continue!"
 
     exit 1
   fi
 
   # Fetches the organization.
-  echo "Fetching organization..."
+  echo "Fetching the organization..."
 
   ORG=$($CURL_CMD -s \
                   -H "Accept: application/json" \
@@ -67,13 +67,13 @@ function applyResources() {
 
   # Checks if the organization exists.
   if [ -z "$ORG" ]; then
-    echo "Please check your Hydrolix installation! The organization wasn't found!"
+    echo "Please check your installation! The organization wasn't found!"
 
     exit 1
   fi
 
   # Fetches the project.
-  echo "Fetching project..."
+  echo "Fetching the project..."
 
   PROJECT_NAME=$($JQ_CMD -r ".name" "$PROJECT_STRUCTURE_FILENAME")
   PROJECT=$($CURL_CMD -s \
@@ -85,7 +85,7 @@ function applyResources() {
   # Checks if the project exists.
   if [ -z "$PROJECT" ]; then
     # Creates the project based on the project structure file.
-    echo "Creating project..."
+    echo "Creating the project..."
 
     PROJECT=$($CURL_CMD -s \
                         -X POST \
@@ -98,7 +98,7 @@ function applyResources() {
   fi
 
   # Fetches the table.
-  echo "Fetching table..."
+  echo "Fetching the table..."
 
   TABLE_NAME=$($JQ_CMD -r ".name" "$TABLE_STRUCTURE_FILENAME")
   TABLE=$($CURL_CMD -s \
@@ -110,7 +110,7 @@ function applyResources() {
   # Checks if the table exists.
   if [ -z "$TABLE" ]; then
     # Creates the table based on the table structure file.
-    echo "Creating table..."
+    echo "Creating the table..."
 
     TABLE=$($CURL_CMD -s \
                         -X POST \
@@ -122,7 +122,7 @@ function applyResources() {
   fi
 
   # Fetches the transform.
-  echo "Fetching transform..."
+  echo "Fetching the transformation..."
 
   TRANSFORM_NAME=$($JQ_CMD -r ".name" "$TRANSFORM_STRUCTURE_FILENAME")
   TRANSFORM=$($CURL_CMD -s \
@@ -134,7 +134,7 @@ function applyResources() {
   # Checks if the transform exists.
   if [ -z "$TRANSFORM" ]; then
     # Creates the transform based on the transform structure file.
-    echo "Creating transform..."
+    echo "Creating the transformation..."
 
     TRANSFORM=$($CURL_CMD -s \
                           -X POST \
@@ -145,7 +145,7 @@ function applyResources() {
                           -d @"$TRANSFORM_STRUCTURE_FILENAME" | $JQ_CMD -r '.uuid')
   fi
 
-  echo "Hydrolix resources were validated successfully!"
+  echo "The resources were validated successfully!"
 }
 
 # Main function.

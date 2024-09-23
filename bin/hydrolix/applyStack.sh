@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check the dependencies of this script.
+# Checks the dependencies of this script.
 function checkDependencies() {
   if [ -z "$KUBECONFIG" ]; then
     echo "The kubeconfig filename is not defined! Please define it first to continue!"
@@ -41,6 +41,8 @@ function checkDependencies() {
 
 # Creates the namespace of the stack.
 function createNamespace() {
+  echo "Creating the namespace..."
+
   $KUBECTL_CMD create namespace "$NAMESPACE" \
                -o yaml \
                --dry-run=client | $KUBECTL_CMD apply -f -
@@ -48,6 +50,8 @@ function createNamespace() {
 
 # Creates the settings of the stack.
 function createSettings() {
+  echo "Creating the settings..."
+
   $KUBECTL_CMD create secret tls traefik-tls \
                --key="$CERTIFICATE_KEY_FILENAME" \
                --cert="$CERTIFICATE_FILENAME" \
@@ -56,14 +60,18 @@ function createSettings() {
                --dry-run=client | $KUBECTL_CMD apply -f -
 }
 
-# Apply the stack.
+# Applies the stack.
 function applyStack() {
+  echo "Applying the stack..."
+
   $KUBECTL_CMD apply -f "$OPERATOR_FILENAME"
 
   # Waits until operator is ready.
   sleep 5
 
   $KUBECTL_CMD apply -f "$STACK_FILENAME"
+
+  echo "The stack was applied successfully!"
 }
 
 # Main function.
