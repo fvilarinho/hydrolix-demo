@@ -1,6 +1,7 @@
 # Required variables.
 locals {
   certificateIssuanceScript              = abspath(pathexpand("../bin/tls/certificateIssuance.sh"))
+  cleanUpScript                          = abspath(pathexpand("../bin/tls/cleanUp.sh"))
   certificateIssuanceCredentialsFilename = abspath(pathexpand("../etc/tls/certificateIssuance.properties"))
   certificateFilename                    = abspath(pathexpand("../etc/tls/fullchain.pem"))
   certificateKeyFilename                 = abspath(pathexpand("../etc/tls/privkey.pem"))
@@ -40,4 +41,19 @@ resource "null_resource" "certificateIssuance" {
   }
 
   depends_on = [ local_sensitive_file.certificateIssuanceCredentials ]
+}
+
+# Creates the clean-up script.
+resource "local_file" "certificateCleanUp" {
+  filename = local.cleanUpScript
+  content  = <<EOT
+#!/bin/bash
+
+function deleteCertificate() {
+  rm -f ${local.certificateFilename}
+  rm -f ${local.certificateKeyFilename}
+}
+
+deleteCertificate
+EOT
 }
