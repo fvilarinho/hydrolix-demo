@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check the dependencies of this script.
+# Checks the dependencies of this script.
 function checkDependencies() {
   if [ -z "$KUBECONFIG" ]; then
     echo "The kubeconfig filename is not defined! Please define it first to continue!"
@@ -41,6 +41,8 @@ function checkDependencies() {
 
 # Creates the namespace of the stack.
 function createNamespace() {
+  echo "Creating the namespace..."
+
   $KUBECTL_CMD create namespace "$NAMESPACE" \
                -o yaml \
                --dry-run=client | $KUBECTL_CMD apply -f -
@@ -48,6 +50,8 @@ function createNamespace() {
 
 # Creates the settings of the stack.
 function createSettings() {
+  echo "Creating the settings..."
+
   # Ingress definitions.
   $KUBECTL_CMD create configmap ingress-settings \
                --from-file="$INGRESS_SETTINGS_FILENAME" \
@@ -70,7 +74,11 @@ function createSettings() {
 
 # Apply the stack.
 function applyStack() {
+  echo "Applying the stack..."
+
   $KUBECTL_CMD apply -f "$STACK_FILENAME" -n "$NAMESPACE"
+
+  echo "The stack was applied successfully!"
 }
 
 # Main function.
