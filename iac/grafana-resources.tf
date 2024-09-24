@@ -47,6 +47,7 @@ resource "null_resource" "applyGrafanaResources" {
       USERNAME            = var.settings.general.email
       PASSWORD            = var.settings.grafana.password
       DATASOURCE_FILENAME = local.grafanaDatasourceFilename
+      DASHBOARD_FILENAME  = local.grafanaDashboardFilename
     }
 
     command = abspath(pathexpand(local.grafanaApplyResourcesScript))
