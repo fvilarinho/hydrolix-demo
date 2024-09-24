@@ -45,8 +45,6 @@ function undeploy() {
                  -upgrade \
                  -migrate-state || exit 1
 
-  cleanUp || exit 1
-
   $TERRAFORM_CMD destroy \
                  -auto-approve
 }

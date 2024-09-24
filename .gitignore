@@ -1,16 +1,13 @@
 /.idea/
 /etc/grafana/.kubeconfig
-/bin/grafana/cleanUp.sh
 /etc/grafana/ingress.conf
 /etc/grafana/resources/grafana-clickhouse-datasource.json
 /etc/grafana/stack.yaml
 /etc/hydrolix/.kubeconfig
-/bin/hydrolix/cleanUp.sh
 /etc/hydrolix/operator.yaml
 /etc/hydrolix/stack.yaml
 /etc/tls/*.pem
 /etc/tls/certificateIssuance.properties
-/bin/tls/cleanUp.sh
 /iac/.terraform*
 /iac/terraform.tfstate*
 /iac/terraform.tfvars

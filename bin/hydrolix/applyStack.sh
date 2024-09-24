@@ -39,6 +39,15 @@ function checkDependencies() {
   fi
 }
 
+# Prepares the environment to execute this script.
+function prepareToExecute() {
+  export SOURCE_CERTIFICATE_FILENAME=/etc/letsencrypt/live/"$DOMAIN"/fullchain.pem
+  export SOURCE_CERTIFICATE_KEY_FILENAME=/etc/letsencrypt/live/"$DOMAIN"/privkey.pem
+
+  export DESTINATION_CERTIFICATE_FILENAME=$CERTIFICATE_FILENAME
+  export DESTINATION_CERTIFICATE_KEY_FILENAME=$CERTIFICATE_KEY_FILENAME
+}
+
 # Creates the namespace of the stack.
 function createNamespace() {
   echo "Creating the namespace..."
@@ -51,6 +60,14 @@ function createNamespace() {
 # Creates the settings of the stack.
 function createSettings() {
   echo "Creating the settings..."
+
+  if [ -f "$SOURCE_CERTIFICATE_FILENAME" ]; then
+    cp -f "$SOURCE_CERTIFICATE_FILENAME" "$DESTINATION_CERTIFICATE_FILENAME"
+  fi
+
+  if [ -f "$SOURCE_CERTIFICATE_KEY_FILENAME" ]; then
+    cp -f "$SOURCE_CERTIFICATE_KEY_FILENAME" "$DESTINATION_CERTIFICATE_KEY_FILENAME"
+  fi
 
   $KUBECTL_CMD create secret tls traefik-tls \
                --key="$CERTIFICATE_KEY_FILENAME" \
@@ -77,6 +94,7 @@ function applyStack() {
 # Main function.
 function main() {
   checkDependencies
+  prepareToExecute
   createNamespace
   createSettings
   applyStack

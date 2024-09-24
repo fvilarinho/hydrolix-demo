@@ -11,6 +11,7 @@ resource "null_resource" "applyHydrolixResources" {
     # Required variables.
     environment = {
       URL                          = local.hydrolixUrl
+      DOMAIN                       = var.settings.general.domain
       USERNAME                     = var.settings.general.email
       PASSWORD                     = var.settings.hydrolix.password
       PROJECT_STRUCTURE_FILENAME   = local.hydrolixProjectStructureFilename

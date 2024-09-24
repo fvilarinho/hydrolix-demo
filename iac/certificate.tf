@@ -38,18 +38,3 @@ resource "null_resource" "certificateIssuance" {
 
   depends_on = [ local_sensitive_file.certificateIssuanceCredentials ]
 }
-
-# Creates the clean-up script.
-resource "local_file" "certificateCleanUp" {
-  filename = local.cleanUpScript
-  content  = <<EOT
-#!/bin/bash
-
-function deleteCertificate() {
-  rm -f ${local.certificateFilename}
-  rm -f ${local.certificateKeyFilename}
-}
-
-deleteCertificate
-EOT
-}

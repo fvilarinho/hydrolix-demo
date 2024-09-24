@@ -48,9 +48,6 @@ function issueTheCertificate() {
     fi
   fi
 
-  cp -f /etc/letsencrypt/live/"$DOMAIN"/fullchain.pem ../etc/tls
-  cp -f /etc/letsencrypt/live/"$DOMAIN"/privkey.pem ../etc/tls
-
   echo "The certificate was validated successfully!"
 }
 
