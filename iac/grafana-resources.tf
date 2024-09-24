@@ -2,24 +2,34 @@
 resource "local_sensitive_file" "grafanaDatasource" {
   filename = local.grafanaDatasourceFilename
   content  = <<EOT
-{
+  {
   "orgId": 1,
   "name": "grafana-clickhouse-datasource",
   "type": "grafana-clickhouse-datasource",
   "typeLogoUrl": "public/plugins/grafana-clickhouse-datasource/img/logo.svg",
+  "access": "proxy",
+  "url": "",
+  "user": "",
+  "database": "",
   "basicAuth": false,
+  "basicAuthUser": "",
   "withCredentials": false,
   "isDefault": true,
   "jsonData": {
+    "version": "4.4.0",
     "protocol": "native",
+    "logs": {
+      "defaultTable": "otel_logs"
+    },
+    "traces": {
+      "defaultTable": "otel_traces"
+    },
     "host": "${local.hydrolixHostname}",
     "port": 9440,
     "secure": true,
     "username": "${var.settings.general.email}"
   },
-  "secureJsonData": {
-    "password": "${var.settings.hydrolix.password}"
-  },
+  "secureJsonFields": {},
   "readOnly": false,
   "accessControl": {
     "alert.instances.external:read": true,
@@ -33,6 +43,10 @@ resource "local_sensitive_file" "grafanaDatasource" {
     "datasources:query": true,
     "datasources:read": true,
     "datasources:write": true
+  },
+  "apiVersion": "",
+  "secureJsonData": {
+    "password": "${var.settings.hydrolix.password}"
   }
 }
 EOT
