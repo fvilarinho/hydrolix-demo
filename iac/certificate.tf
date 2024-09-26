@@ -1,7 +1,6 @@
 # Required variables.
 locals {
   certificateIssuanceScript              = abspath(pathexpand("../bin/tls/certificateIssuance.sh"))
-  cleanUpScript                          = abspath(pathexpand("../bin/tls/cleanUp.sh"))
   certificateIssuanceCredentialsFilename = abspath(pathexpand("../etc/tls/certificateIssuance.properties"))
   certificateFilename                    = abspath(pathexpand("../etc/tls/fullchain.pem"))
   certificateKeyFilename                 = abspath(pathexpand("../etc/tls/privkey.pem"))

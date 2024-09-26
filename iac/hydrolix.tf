@@ -7,7 +7,6 @@ locals {
   hydrolixUrl                        = "https://${local.hydrolixHostname}"
   hydrolixStackFilename              = abspath(pathexpand("../etc/hydrolix/stack.yaml"))
   hydrolixApplyStackScript           = abspath(pathexpand("../bin/hydrolix/applyStack.sh"))
-  hydrolixCleanUpScript              = abspath(pathexpand("../bin/hydrolix/cleanUp.sh"))
   fetchHydrolixOriginScript          = abspath(pathexpand("../bin/hydrolix/fetchOrigin.sh"))
   hydrolixProjectStructureFilename   = abspath(pathexpand("../etc/hydrolix/resources/project.json"))
   hydrolixTableStructureFilename     = abspath(pathexpand("../etc/hydrolix/resources/table.json"))

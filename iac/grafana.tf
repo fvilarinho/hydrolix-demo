@@ -9,6 +9,5 @@ locals {
   grafanaDashboardFilename       = abspath(pathexpand("../etc/grafana/resources/akamai-ds2-dashboard.json"))
   grafanaApplyStackScript        = abspath(pathexpand("../bin/grafana/applyStack.sh"))
   grafanaApplyResourcesScript    = abspath(pathexpand("../bin/grafana/applyResources.sh"))
-  grafanaCleanUpScript           = abspath(pathexpand("../bin/grafana/cleanUp.sh"))
   fetchGrafanaOriginScript       = abspath(pathexpand("../bin/grafana/fetchOrigin.sh"))
 }
